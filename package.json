@@ -1,6 +1,10 @@
 {
   "name": "al-mawareeth",
   "private": true,
+  "workspaces": [
+    "backend",
+    "mobile"
+  ],
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check ."
