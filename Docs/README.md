@@ -2,43 +2,76 @@
 
 ## Prerequisites
 
-Make sure you have the following installed:
+- [Docker](https://docs.docker.com/get-docker/) with Docker Compose v2
+- For running on a physical device or emulator: [Expo Go](https://expo.dev/client) on your phone, or Android Studio / Xcode on the host
 
-- [Node.js](https://nodejs.org/) (v20+)
-- [Git](https://git-scm.com/)
-- [Expo Go](https://expo.dev/client) on your phone (optional)
+> Mobile native builds (`expo run:android`, `expo run:ios`) still require Android Studio or Xcode on the host. Docker only covers the API and the Metro/Expo dev server.
 
 ---
 
-## Getting Started
+## Getting Started (Docker)
 
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-org/al-mawareeth.git
+git clone https://github.com/ilm-ve-irfan/al-mawareeth.git
 cd al-mawareeth
 ```
 
-### 2. Setup Backend
+### 2. Configure environment
 
 ```bash
-cd backend
+cp backend/.env.example backend/.env
+```
+
+### 3. Start everything
+
+```bash
+docker compose up --build
+```
+
+This starts:
+
+- **`backend`** — Express API on `http://localhost:3000`
+- **`mobile`** — Expo dev server (Metro) on port `8081`, started with `--tunnel` so Expo Go on your phone can reach it without LAN configuration
+
+Open Expo Go and scan the QR code printed by the `mobile` service to load the app.
+
+### Useful Docker commands
+
+| Command                                        | Description                                     |
+| ---------------------------------------------- | ----------------------------------------------- |
+| `docker compose up backend`                    | Start only the backend                          |
+| `docker compose up mobile`                     | Start only the mobile dev server                |
+| `docker compose run --rm backend npm test`     | Run backend tests                               |
+| `docker compose run --rm mobile npm test`      | Run mobile tests                                |
+| `docker compose down`                          | Stop and remove containers                      |
+| `docker compose down -v`                       | Stop, remove containers and named volumes       |
+
+---
+
+## Running natively (fallback)
+
+Useful when you need to run an Android emulator, iOS simulator, or a native build.
+
+### Backend
+
+```bash
 npm install
-cp .env.example .env
-npm run dev
+cp backend/.env.example backend/.env
+npm run dev -w backend
 ```
 
 → API runs on `http://localhost:3000`
 
-### 3. Setup Mobile
+### Mobile
 
 ```bash
-cd mobile
 npm install
-npm start
+npm start -w mobile
 ```
 
-→ Press `w` to open in browser or `a` for Android Emulator
+Then press `a` to open the Android emulator or `i` for the iOS simulator, or scan the QR code with Expo Go.
 
 ---
 
@@ -46,16 +79,8 @@ npm start
 
 ```
 al-mawareeth/
-├── backend/     → Node.js / Express API
-└── mobile/      → React Native / Expo App
+├── backend/             → Node.js / Express API (TypeScript)
+├── mobile/              → React Native / Expo app
+├── docker-compose.yml   → Local dev orchestration
+└── Docs/                → Project and team docs
 ```
-
----
-
-## Useful Commands
-
-| Command       | Description               |
-| ------------- | ------------------------- |
-| `npm run dev` | Start backend in dev mode |
-| `npm start`   | Start Expo app            |
-| `npm test`    | Run tests                 |
