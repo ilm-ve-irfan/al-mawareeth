@@ -14,5 +14,6 @@ RUN npm ci
 FROM deps AS dev
 ENV NODE_ENV=development
 COPY mobile ./mobile
+WORKDIR /app/mobile
 EXPOSE 8081
 CMD ["npx", "expo", "start", "--tunnel", "--port", "8081"]
