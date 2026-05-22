@@ -13,6 +13,7 @@
 Al-Mawareeth is a cross-platform application designed to calculate inheritance distribution according to Islamic law. The system uses a role-based chatbot to gather user information and maintain per-user sessions. The architecture follows a microservices pattern with a shared backend serving web, Android, and iOS clients.
 
 ### Key Goals
+
 - Provide accurate Islamic inheritance calculations
 - Deliver a seamless experience across all platforms
 - Ensure user data privacy and session management
@@ -51,7 +52,8 @@ Al-Mawareeth is a cross-platform application designed to calculate inheritance d
 │                     Data Layer                           │
 ├──────────────────┬──────────────────┬────────────────────┤
 │                       Database                           │
-│                      (PostgreSQL)                        │          
+│                      (PostgreSQL)                        │
 └──────────────────┴──────────────────┴────────────────────┘
 ```
+
 ---
