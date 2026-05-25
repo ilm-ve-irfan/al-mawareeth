@@ -21,6 +21,17 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
-    }
+    },
+    "plugins": [
+      [
+        "expo-localization",
+        {
+          "supportedLocales": {
+            "ios": ["en", "ja"],
+            "android": ["en", "ja"]
+          }
+        }
+      ]
+    ]
   }
 }
