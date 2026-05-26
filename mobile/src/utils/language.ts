@@ -5,6 +5,21 @@ import i18n from '../i18n';
 
 export const STORE_LANGUAGE_KEY = 'settings.lang';
 
+export const ensureRTL = async (lng: string) => {
+  const shouldRTL = i18n.dir(lng) === 'rtl';
+
+  if (I18nManager.isRTL !== shouldRTL) {
+    I18nManager.allowRTL(shouldRTL);
+    I18nManager.forceRTL(shouldRTL);
+
+    if (__DEV__) {
+      NativeModules.DevSettings.reload();
+    } else {
+      await Updates.reloadAsync();
+    }
+  }
+};
+
 export const changeLanguage = async (newLang: 'en' | 'ar') => {
   try {
     await AsyncStorage.setItem(STORE_LANGUAGE_KEY, newLang);
@@ -12,14 +27,7 @@ export const changeLanguage = async (newLang: 'en' | 'ar') => {
     const isRTL = i18n.dir(newLang) === 'rtl';
 
     if (I18nManager.isRTL !== isRTL) {
-      I18nManager.allowRTL(isRTL);
-      I18nManager.forceRTL(isRTL);
-
-      if (__DEV__) {
-        NativeModules.DevSettings.reload();
-      } else {
-        await Updates.reloadAsync();
-      }
+      await ensureRTL(newLang);
     } else {
       i18n.changeLanguage(newLang);
     }
