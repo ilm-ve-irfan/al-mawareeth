@@ -15,13 +15,10 @@ export const languageDetector: LanguageDetectorAsyncModule = {
       const lang = savedDataJSON ? savedDataJSON : null;
       const deviceLang = getLocales()[0]?.languageCode || 'en';
       const lng = lang ?? deviceLang;
-
-      await ensureRTL(lng);
-
+      ensureRTL(lng);
       return lng;
     } catch (error) {
       console.error('Error reading language from storage:', error);
-      await ensureRTL('en');
       return 'en';
     }
   },
