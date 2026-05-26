@@ -2,6 +2,7 @@
 import 'i18next';
 // import all namespaces (for the default language, only)
 import common from './locales/en/common.json';
+import settings from './locales/en/settings.json';
 
 declare module 'i18next' {
   // Extend CustomTypeOptions
@@ -11,6 +12,7 @@ declare module 'i18next' {
     // custom resources type
     resources: {
       common: typeof common;
+      settings: typeof settings;
     };
   }
 }
