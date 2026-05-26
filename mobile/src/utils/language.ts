@@ -1,7 +1,7 @@
 import { I18nManager, NativeModules } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
-import i18n from '../i18n';
+import i18n from 'i18next';
 
 export const STORE_LANGUAGE_KEY = 'settings.lang';
 
