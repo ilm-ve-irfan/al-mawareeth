@@ -1,0 +1,36 @@
+{
+  "app": {
+    "title": "المواريث",
+    "caption": "المواريث - عرض الواجهات"
+  },
+  "sections": {
+    "buttons": "الأزرار",
+    "input": "الإدخال",
+    "typography": "الخطوط",
+    "theme": "السمة"
+  },
+  "buttons": {
+    "primary": "أساسي",
+    "secondary": "ثانوي",
+    "ghost": "شفاف",
+    "disabled": "معطل",
+    "validate": "تحقق"
+  },
+  "input": {
+    "full_name_label": "الاسم الكامل",
+    "full_name_placeholder": "مثال: خالد",
+    "full_name_error": "الاسم الكامل مطلوب"
+  },
+  "typography": {
+    "display": "عرض",
+    "title": "عنوان",
+    "body": "النص - الافتراضي لمعظم المحتوى.",
+    "caption": "تسمية - للمعلومات الثانوية.",
+    "label": "وسم - لوسوم النماذج والعناصر."
+  },
+  "scheme": {
+    "active": "السمة الحالية: {{scheme}}",
+    "dark": "داكن",
+    "light": "فاتح"
+  }
+}

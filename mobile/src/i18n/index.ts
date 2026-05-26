@@ -9,7 +9,7 @@ i18n
   .init({
     enableSelector: true,
     defaultNS: 'common',
-    ns: ['common', 'settings'],
+    ns: ['common', 'settings', 'theme'],
     resources,
     fallbackLng: 'en',
     supportedLngs: ['en', 'ar'],
