@@ -22,6 +22,9 @@
       },
       "edgeToEdgeEnabled": true
     },
+    "extra": {
+      "supportsRTL": true
+    },
     "plugins": [
       [
         "expo-localization",
