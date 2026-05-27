@@ -1,69 +1,122 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, useColorScheme } from 'react-native';
 
 import { Button, Card, Text, TextField } from './components';
 import { spacing, useColors } from './theme';
+import { useTranslation } from 'react-i18next';
+import { changeLanguage } from './src/utils/language';
+
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const colors = useColors();
   const scheme = useColorScheme() ?? 'light';
   const [name, setName] = useState('');
   const [error, setError] = useState<string | undefined>(undefined);
+  const [isReady, setIsReady] = useState(false);
+  const { i18n, t } = useTranslation('theme');
+
+  useEffect(() => {
+    const handleInit = () => {
+      setIsReady(true);
+    };
+
+    if (i18n.isInitialized) {
+      handleInit();
+    } else {
+      i18n.on('initialized', handleInit);
+    }
+
+    return () => {
+      i18n.off('initialized', handleInit);
+    };
+  }, [i18n]);
+
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
+    return null;
+  }
 
   const handleSubmit = () => {
-    setError(name.trim() ? undefined : 'Full name is required');
+    setError(name.trim() ? undefined : t('input.full_name_error'));
   };
+
+  const targetLang = i18n.language === 'en' ? 'ar' : 'en';
 
   return (
     <View style={[styles.root, { backgroundColor: colors.background }]}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.header}>
-          <Text variant="display">المواريث</Text>
-          <Text variant="caption">Al Mawareeth — Widget Showcase</Text>
+          <Text variant="display">{t('app.title')}</Text>
+          <Text variant="caption">{t('app.caption')}</Text>
         </View>
 
         <Card>
-          <Text variant="title">Buttons</Text>
-          <View style={styles.row}>
-            <Button label="Primary" onPress={handleSubmit} />
-            <Button label="Secondary" variant="secondary" onPress={handleSubmit} />
-            <Button label="Ghost" variant="ghost" onPress={handleSubmit} />
-          </View>
-          <Button label="Disabled" disabled />
+          <SwitchLanguageButton lang={targetLang} />
         </Card>
 
         <Card>
-          <Text variant="title">Input</Text>
+          <Text variant="title">{t('sections.buttons')}</Text>
+          <View style={styles.row}>
+            <Button label={t('buttons.primary')} onPress={handleSubmit} />
+            <Button label={t('buttons.secondary')} variant="secondary" onPress={handleSubmit} />
+            <Button label={t('buttons.ghost')} variant="ghost" onPress={handleSubmit} />
+          </View>
+          <Button label={t('buttons.disabled')} disabled />
+        </Card>
+
+        <Card>
+          <Text variant="title">{t('sections.input')}</Text>
           <TextField
-            label="Full name"
-            placeholder="e.g. Khaled"
+            label={t('input.full_name_label')}
+            placeholder={t('input.full_name_placeholder')}
             value={name}
             onChangeText={setName}
             error={error}
             autoCapitalize="words"
           />
-          <Button label="Validate" onPress={handleSubmit} />
+          <Button label={t('buttons.validate')} onPress={handleSubmit} />
         </Card>
 
         <Card>
-          <Text variant="title">Typography</Text>
-          <Text variant="display">Display</Text>
-          <Text variant="title">Title</Text>
-          <Text variant="body">Body — the default for most prose.</Text>
-          <Text variant="caption">Caption — for secondary information.</Text>
-          <Text variant="label">Label — for form labels and chips.</Text>
+          <Text variant="title">{t('sections.typography')}</Text>
+          <Text variant="display">{t('typography.display')}</Text>
+          <Text variant="title">{t('typography.title')}</Text>
+          <Text variant="body">{t('typography.body')}</Text>
+          <Text variant="caption">{t('typography.caption')}</Text>
+          <Text variant="label">{t('typography.label')}</Text>
         </Card>
 
         <Card>
-          <Text variant="title">Theme</Text>
-          <Text>Active scheme: {scheme === 'dark' ? 'Dark' : 'Light'}</Text>
+          <Text variant="title">{t('sections.theme')}</Text>
+          <Text>{t('scheme.active', { scheme: t(`scheme.${scheme}`) })}</Text>
         </Card>
       </ScrollView>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
     </View>
   );
 }
+
+const SwitchLanguageButton = ({ lang }: { lang: 'en' | 'ar' }) => {
+  const { t } = useTranslation(['settings']);
+
+  return (
+    <Button
+      label={t('switch_lang', {
+        lang: t(`languages.${lang}`),
+      })}
+      onPress={() => changeLanguage(lang)}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   root: { flex: 1 },

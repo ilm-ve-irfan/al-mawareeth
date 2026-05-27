@@ -1,0 +1,36 @@
+{
+  "app": {
+    "title": "Al Mawareeth",
+    "caption": "Al Mawareeth - Widget Showcase"
+  },
+  "sections": {
+    "buttons": "Buttons",
+    "input": "Input",
+    "typography": "Typography",
+    "theme": "Theme"
+  },
+  "buttons": {
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "ghost": "Ghost",
+    "disabled": "Disabled",
+    "validate": "Validate"
+  },
+  "input": {
+    "full_name_label": "Full name",
+    "full_name_placeholder": "e.g. Khaled",
+    "full_name_error": "Full name is required"
+  },
+  "typography": {
+    "display": "Display",
+    "title": "Title",
+    "body": "Body - the default for most prose.",
+    "caption": "Caption - for secondary information.",
+    "label": "Label - for form labels and chips."
+  },
+  "scheme": {
+    "active": "Active scheme: {{scheme}}",
+    "dark": "Dark",
+    "light": "Light"
+  }
+}

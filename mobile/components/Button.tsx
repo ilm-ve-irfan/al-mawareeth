@@ -10,12 +10,7 @@ export type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
   variant?: ButtonVariant;
 };
 
-export function Button({
-  label,
-  variant = 'primary',
-  disabled,
-  ...rest
-}: ButtonProps) {
+export function Button({ label, variant = 'primary', disabled, ...rest }: ButtonProps) {
   const s = useWidgetStyles();
   const labelStyle = {
     primary: s.button.labelPrimary,
