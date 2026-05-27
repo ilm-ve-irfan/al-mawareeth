@@ -13,7 +13,7 @@ i18n
     fallbackLng: 'en',
     supportedLngs: ['en', 'ar'],
     interpolation: {
-      escapeValue: false, // react already safes from xss
+      escapeValue: false,
     },
   });
 
