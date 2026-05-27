@@ -1,9 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getLocales } from 'expo-localization';
 import { LanguageDetectorAsyncModule } from 'i18next';
-import { ensureRTL } from '../utils/language';
-
-const STORE_LANGUAGE_KEY = 'settings.lang';
+import { ensureRTL, STORE_LANGUAGE_KEY } from '../utils/language';
 
 export const languageDetector: LanguageDetectorAsyncModule = {
   type: 'languageDetector',
