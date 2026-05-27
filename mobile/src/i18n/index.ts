@@ -7,7 +7,6 @@ i18n
   .use(initReactI18next)
   .use(languageDetector)
   .init({
-    enableSelector: true,
     defaultNS: 'common',
     ns: ['common', 'settings', 'theme'],
     resources,
