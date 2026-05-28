@@ -53,12 +53,13 @@ Every consumer composes from `useWidgetStyles()`. The hook calls
 
 `useWidgetStyles()` returns a namespaced `StyleSheet` per widget:
 
-| Namespace | Keys                                                              |
-| --------- | ----------------------------------------------------------------- |
-| `button`  | `base`, `primary`, `secondary`, `ghost`, `disabled`, `pressed`, `labelPrimary`, `labelSecondary`, `labelGhost` |
-| `card`    | `base`                                                            |
-| `input`   | `wrapper`, `label`, `field`, `fieldError`, `error`                |
-| `text`    | `display`, `title`, `body`, `caption`, `label`                    |
+| Namespace  | Keys                                                              |
+| ---------- | ----------------------------------------------------------------- |
+| `button`   | `base`, `primary`, `secondary`, `ghost`, `disabled`, `pressed`, `labelPrimary`, `labelSecondary`, `labelGhost` |
+| `card`     | `base`                                                            |
+| `input`    | `wrapper`, `label`, `field`, `fieldError`, `error`                |
+| `text`     | `display`, `title`, `body`, `caption`, `label`                    |
+| `progress` | `container`, `track`, `segment`, `segmentDone`, `segmentCurrent`  |
 
 ## Usage
 

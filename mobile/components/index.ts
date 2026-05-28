@@ -8,3 +8,6 @@ export type { TextProps } from './Text';
 
 export { TextField } from './TextField';
 export type { TextFieldProps } from './TextField';
+
+export { StepIndicator } from './StepIndicator';
+export type { StepIndicatorProps } from './StepIndicator';

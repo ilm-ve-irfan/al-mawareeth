@@ -75,6 +75,22 @@ export function useWidgetStyles() {
         caption: { ...typography.caption, color: c.textMuted },
         label: { ...typography.label, color: c.textMuted },
       }),
+
+      progress: StyleSheet.create({
+        container: { gap: spacing.sm },
+        track: {
+          flexDirection: 'row',
+          gap: spacing.xs,
+        },
+        segment: {
+          flex: 1,
+          height: spacing.xs,
+          borderRadius: radii.pill,
+          backgroundColor: c.surfaceVariant,
+        },
+        segmentDone: { backgroundColor: c.primary },
+        segmentCurrent: { backgroundColor: c.secondary },
+      }),
     }),
     [c],
   );
