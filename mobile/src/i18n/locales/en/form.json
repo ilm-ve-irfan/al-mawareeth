@@ -1,0 +1,29 @@
+{
+  "step": "Step {{current}} of {{total}}",
+  "actions": {
+    "next": "Next",
+    "back": "Back",
+    "start": "Start",
+    "finish": "Finish"
+  },
+  "welcome": {
+    "title": "Inheritance Calculation",
+    "subtitle": "Calculate the distribution of an estate according to Islamic inheritance law."
+  },
+  "deceased": {
+    "title": "Deceased Information",
+    "subtitle": "Enter the details of the deceased person."
+  },
+  "assets": {
+    "title": "Assets & Liabilities",
+    "subtitle": "Add the deceased's assets and outstanding debts."
+  },
+  "family": {
+    "title": "Family Details",
+    "subtitle": "Add the surviving heirs."
+  },
+  "summary": {
+    "title": "Summary",
+    "subtitle": "Review and confirm before calculation."
+  }
+}
