@@ -11,8 +11,14 @@
     "en": "English"
   },
   "welcome": {
-    "title": "Inheritance Calculation",
-    "subtitle": "Calculate the distribution of an estate according to Islamic inheritance law."
+    "title": "Islamic Inheritance Calculator",
+    "subtitle": "Calculate the distribution of an estate according to Islamic inheritance law.",
+    "brand": "العلم والعرفان",
+    "brandSubtitle": "Islamic Sciences Center",
+    "chooseLanguage": "Choose language",
+    "basmala": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+    "start": "Start calculation",
+    "moreInfo": "More information"
   },
   "deceased": {
     "title": "Deceased Information",
