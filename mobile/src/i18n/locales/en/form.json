@@ -16,11 +16,49 @@
   },
   "deceased": {
     "title": "Deceased Information",
-    "subtitle": "Enter the details of the deceased person."
+    "subtitle": "Enter the details of the deceased person.",
+    "name": "Name of the deceased",
+    "namePlaceholder": "Full name",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "hasWasiya": "Is there a bequest (wasiya)?",
+    "wasiyaAmount": "Bequest amount",
+    "wasiyaHint": "A bequest may not exceed one third of the estate."
+  },
+  "currency": {
+    "label": "Currency",
+    "SAR": "Riyal (SAR)",
+    "USD": "Dollar (USD)",
+    "EUR": "Euro (EUR)"
   },
   "assets": {
-    "title": "Assets & Liabilities",
-    "subtitle": "Add the deceased's assets and outstanding debts."
+    "title": "Estate assets",
+    "subtitle": "Add the deceased's assets.",
+    "add": "Add",
+    "value": "Value",
+    "description": "Description (optional)",
+    "remove": "Remove",
+    "types": {
+      "cash": "Cash / Bank",
+      "gold": "Gold",
+      "realEstate": "Real estate / Land",
+      "vehicle": "Vehicle",
+      "other": "Other"
+    },
+    "gold": {
+      "grams": "Weight (grams)"
+    },
+    "realEstate": {
+      "description": "Property description",
+      "shares": "Shares (sahm)"
+    }
+  },
+  "netEstate": {
+    "label": "Net estate for distribution"
+  },
+  "liabilities": {
+    "label": "Debts & expenses"
   },
   "family": {
     "title": "Family Details",
