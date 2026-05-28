@@ -61,7 +61,15 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
   }));
 
   const currencyLabel = t(`currency.${data.currency}`);
-  const net = netEstate(data);
+  const fmt = (n: number) => `${currencyLabel} ${Math.round(n)}`;
+
+  const net = netEstate(data); // assets − debts
+  const maxWasiyaValue = Math.max(0, net / 3);
+  const wasiyaAmount = data.deceased.hasWasiya ? data.deceased.wasiyaAmount : 0;
+  const wasiyaExceeds = data.deceased.hasWasiya && wasiyaAmount > maxWasiyaValue;
+  // A bequest above the legal third is void for the excess, so only deduct
+  // up to one third when computing what reaches the heirs.
+  const forDistribution = net - Math.min(wasiyaAmount, maxWasiyaValue);
 
   return (
     <View style={[styles.root, { backgroundColor: colors.background }]}>
@@ -90,33 +98,6 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
               onChange={(gender) => setDeceased({ gender })}
             />
           </View>
-
-          <View style={styles.row}>
-            <Text variant="label">{t('deceased.hasWasiya')}</Text>
-            <Switch
-              value={data.deceased.hasWasiya}
-              onValueChange={(hasWasiya) => setDeceased({ hasWasiya })}
-            />
-          </View>
-
-          {data.deceased.hasWasiya ? (
-            <View style={styles.field}>
-              <TextField
-                label={t('deceased.wasiyaAmount')}
-                value={
-                  data.deceased.wasiyaAmount
-                    ? String(data.deceased.wasiyaAmount)
-                    : ''
-                }
-                onChangeText={(text) =>
-                  setDeceased({ wasiyaAmount: toNumber(text) })
-                }
-                keyboardType="numeric"
-                placeholder="0"
-              />
-              <Text variant="caption">{t('deceased.wasiyaHint')}</Text>
-            </View>
-          ) : null}
         </Card>
 
         {/* Currency ----------------------------------------------------- */}
@@ -153,10 +134,50 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
           })}
         </Card>
 
-        {/* Net estate (single currency total → feeds the wasiya later) -- */}
+        {/* Wasiya (bequest) — sits next to the estate total it relates to */}
+        <Card>
+          <View style={styles.row}>
+            <Text variant="label">{t('deceased.hasWasiya')}</Text>
+            <Switch
+              value={data.deceased.hasWasiya}
+              onValueChange={(hasWasiya) => setDeceased({ hasWasiya })}
+            />
+          </View>
+
+          {data.deceased.hasWasiya ? (
+            <View style={styles.field}>
+              <TextField
+                label={t('deceased.wasiyaAmount')}
+                value={
+                  data.deceased.wasiyaAmount
+                    ? String(data.deceased.wasiyaAmount)
+                    : ''
+                }
+                onChangeText={(text) =>
+                  setDeceased({ wasiyaAmount: toNumber(text) })
+                }
+                keyboardType="numeric"
+                placeholder="0"
+                error={
+                  wasiyaExceeds
+                    ? t('deceased.wasiyaExceeds', { max: fmt(maxWasiyaValue) })
+                    : undefined
+                }
+              />
+              <Text variant="caption">
+                {t('deceased.wasiyaMax', { max: fmt(maxWasiyaValue) })}
+              </Text>
+            </View>
+          ) : null}
+        </Card>
+
+        {/* Net estate for distribution = assets − debts − (valid) bequest */}
         <Card>
           <Text variant="label">{t('netEstate.label')}</Text>
-          <Text variant="title">{`${currencyLabel} ${net}`}</Text>
+          <Text variant="title">{fmt(forDistribution)}</Text>
+          {data.deceased.hasWasiya ? (
+            <Text variant="caption">{t('netEstate.afterWasiya')}</Text>
+          ) : null}
         </Card>
 
         {/* Liabilities -------------------------------------------------- */}

@@ -24,7 +24,9 @@
     "female": "Female",
     "hasWasiya": "Is there a bequest (wasiya)?",
     "wasiyaAmount": "Bequest amount",
-    "wasiyaHint": "A bequest may not exceed one third of the estate."
+    "wasiyaHint": "A bequest may not exceed one third of the estate.",
+    "wasiyaMax": "Maximum (one third): {{max}}",
+    "wasiyaExceeds": "Exceeds the legal third (max {{max}})"
   },
   "currency": {
     "label": "Currency",
@@ -55,7 +57,8 @@
     }
   },
   "netEstate": {
-    "label": "Net estate for distribution"
+    "label": "Net estate for distribution",
+    "afterWasiya": "After deducting debts and bequest"
   },
   "liabilities": {
     "label": "Debts & expenses"
@@ -69,10 +72,10 @@
     "done": "All questions answered.",
     "q": {
       "spouse": "Was the deceased ever married?",
-      "children": "Are there children?",
+      "children": "Are there sons or daughters?",
       "spouseAlive": "Is the surviving spouse still alive?",
-      "sons": "Sons",
-      "daughters": "Daughters",
+      "sons": "Sons (male)",
+      "daughters": "Daughters (female)",
       "wives": "Wives",
       "husband": "Husband"
     },
