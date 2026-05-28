@@ -6,6 +6,10 @@
     "start": "Start",
     "finish": "Finish"
   },
+  "lang": {
+    "ar": "العربية",
+    "en": "English"
+  },
   "welcome": {
     "title": "Inheritance Calculation",
     "subtitle": "Calculate the distribution of an estate according to Islamic inheritance law."
