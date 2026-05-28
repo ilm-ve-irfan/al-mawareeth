@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { Button, Card, Text, TextField } from '../../components';
+import { Button, Card, StepIndicator, Text, TextField } from '../../components';
 import { spacing, useColors } from '../../theme';
 import { useForm } from '../../src/form/FormContext';
 import type { Gender } from '../../src/form/types';
@@ -15,6 +15,10 @@ import {
 import type { RootStackParamList } from '../../navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'FamilyDetails'>;
+
+// Position of this screen in the overall flow (DeceasedInfo is step 1).
+const STEP_CURRENT = 2;
+const STEP_TOTAL = 4;
 
 // --- Tree-walk engine (UI only; records answers, computes nothing) -------
 
@@ -121,6 +125,8 @@ export default function FamilyDetailsScreen({ navigation }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.background }]}>
       <ScrollView contentContainerStyle={styles.content}>
+        <StepIndicator current={STEP_CURRENT} total={STEP_TOTAL} />
+
         <Card>
           <Text variant="title">{t('family.title')}</Text>
           <Text variant="body">{t('family.subtitle')}</Text>
