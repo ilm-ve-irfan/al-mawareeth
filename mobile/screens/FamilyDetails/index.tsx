@@ -6,11 +6,12 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Card, StepIndicator, Text, TextField } from '../../components';
 import { spacing, useColors } from '../../theme';
 import { useForm } from '../../src/form/FormContext';
-import type { Gender } from '../../src/form/types';
+import type { Gender, Heir } from '../../src/form/types';
 import {
   heirTree,
   type CollectNode,
   type HeirAnswer,
+  type HeirCondition,
 } from '../../src/form/heir-tree';
 import type { RootStackParamList } from '../../navigation/types';
 
@@ -30,22 +31,46 @@ type Snapshot = {
 
 type WalkState = Snapshot & { gender: Gender; history: Snapshot[] };
 
+// Context a guard needs to auto-resolve: gender (for branches), recorded
+// answers, and the heirs collected so far (for count conditions).
+type WalkCtx = {
+  gender: Gender;
+  answers: Record<string, HeirAnswer>;
+  heirs: Heir[];
+};
+
 type WalkAction =
-  | { type: 'answer'; answer: HeirAnswer } // boolean node
-  | { type: 'next' } // collect node "continue"
+  | { type: 'answer'; answer: HeirAnswer; heirs: Heir[] } // boolean node
+  | { type: 'next'; heirs: Heir[] } // collect node "continue"
   | { type: 'back' };
 
-// Pop the next renderable node, auto-resolving any 'branch' nodes by gender.
+// Does a single guard condition hold in the given context?
+function condHolds(cond: HeirCondition, ctx: WalkCtx): boolean {
+  if ('relation' in cond) {
+    const n = ctx.heirs.filter((h) => h.relation === cond.relation).length;
+    return cond.count === 'none' ? n === 0 : n > 0;
+  }
+  const ans = ctx.answers[cond.node] ?? cond.whenMissing;
+  return ans === cond.is;
+}
+
+// Pop the next renderable node, auto-resolving 'branch' (by gender) and
+// 'guard' (by answers + collected heirs) nodes — neither is rendered.
 function advance(
   startQueue: string[],
-  gender: Gender,
+  ctx: WalkCtx,
 ): { currentId: string | null; queue: string[] } {
   let queue = [...startQueue];
   while (queue.length) {
     const [id, ...rest] = queue;
     const node = id ? heirTree.nodes[id] : undefined;
     if (node && node.kind === 'branch') {
-      queue = [...(node.cases[gender] ?? []), ...rest];
+      queue = [...(node.cases[ctx.gender] ?? []), ...rest];
+      continue;
+    }
+    if (node && node.kind === 'guard') {
+      const pass = node.all.every((cond) => condHolds(cond, ctx));
+      queue = [...(pass ? node.next.then : node.next.else), ...rest];
       continue;
     }
     return { currentId: id ?? null, queue: rest };
@@ -53,9 +78,18 @@ function advance(
   return { currentId: null, queue: [] };
 }
 
-const initWalk = (arg: { mainIds: string[]; gender: Gender }): WalkState => {
-  const { currentId, queue } = advance(arg.mainIds, arg.gender);
-  return { currentId, queue, answers: {}, gender: arg.gender, history: [] };
+const initWalk = (arg: {
+  mainIds: string[];
+  gender: Gender;
+  heirs: Heir[];
+}): WalkState => {
+  const answers: Record<string, HeirAnswer> = {};
+  const { currentId, queue } = advance(arg.mainIds, {
+    gender: arg.gender,
+    answers,
+    heirs: arg.heirs,
+  });
+  return { currentId, queue, answers, gender: arg.gender, history: [] };
 };
 
 function snapshot(state: WalkState): Snapshot {
@@ -72,13 +106,20 @@ function walkReducer(state: WalkState, action: WalkAction): WalkState {
       if (!state.currentId) return state;
       const node = heirTree.nodes[state.currentId];
       if (!node || node.kind !== 'boolean') return state;
+      // Record the answer *before* advancing so a guard that depends on it
+      // (possibly the very next node) sees the up-to-date value.
+      const answers = { ...state.answers, [state.currentId]: action.answer };
       const merged = [...node.next[action.answer], ...state.queue];
-      const { currentId, queue } = advance(merged, state.gender);
+      const { currentId, queue } = advance(merged, {
+        gender: state.gender,
+        answers,
+        heirs: action.heirs,
+      });
       return {
         ...state,
         currentId,
         queue,
-        answers: { ...state.answers, [state.currentId]: action.answer },
+        answers,
         history: [...state.history, snapshot(state)],
       };
     }
@@ -87,7 +128,11 @@ function walkReducer(state: WalkState, action: WalkAction): WalkState {
       const node = heirTree.nodes[state.currentId];
       if (!node || node.kind !== 'collect') return state;
       const merged = [...node.next, ...state.queue];
-      const { currentId, queue } = advance(merged, state.gender);
+      const { currentId, queue } = advance(merged, {
+        gender: state.gender,
+        answers: state.answers,
+        heirs: action.heirs,
+      });
       return {
         ...state,
         currentId,
@@ -113,10 +158,15 @@ export default function FamilyDetailsScreen({ navigation }: Props) {
   // Tree question keys are dynamic data; widen the strongly-typed `t`.
   const tt = t as unknown as (key: string) => string;
   const { data } = useForm();
-  const [state, dispatch] = useReducer(walkReducer, {
-    mainIds: heirTree.mainIds,
-    gender: data.deceased.gender,
-  }, initWalk);
+  const [state, dispatch] = useReducer(
+    walkReducer,
+    {
+      mainIds: heirTree.mainIds,
+      gender: data.deceased.gender,
+      heirs: data.heirs,
+    },
+    initWalk,
+  );
 
   const node = state.currentId ? heirTree.nodes[state.currentId] : null;
   const answeredCount = Object.keys(state.answers).length;
@@ -142,14 +192,18 @@ export default function FamilyDetailsScreen({ navigation }: Props) {
               <View style={styles.col}>
                 <Button
                   label={t('family.yes')}
-                  onPress={() => dispatch({ type: 'answer', answer: 'yes' })}
+                  onPress={() =>
+                    dispatch({ type: 'answer', answer: 'yes', heirs: data.heirs })
+                  }
                 />
               </View>
               <View style={styles.col}>
                 <Button
                   label={t('family.no')}
                   variant="ghost"
-                  onPress={() => dispatch({ type: 'answer', answer: 'no' })}
+                  onPress={() =>
+                    dispatch({ type: 'answer', answer: 'no', heirs: data.heirs })
+                  }
                 />
               </View>
             </View>
@@ -160,7 +214,7 @@ export default function FamilyDetailsScreen({ navigation }: Props) {
           <CollectStep
             key={node.id}
             node={node}
-            onDone={() => dispatch({ type: 'next' })}
+            onDone={() => dispatch({ type: 'next', heirs: data.heirs })}
           />
         ) : null}
 

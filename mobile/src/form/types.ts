@@ -76,8 +76,11 @@ export type HeirRelation =
   | 'daughter'
   | 'father'
   | 'mother'
-  | 'brother'
-  | 'sister'
+  | 'fullBrother' // shaqīq: same father and mother
+  | 'fullSister' // shaqīqa: same father and mother
+  | 'paternalBrother' // akh li-ab: same father only
+  | 'paternalSister' // ukht li-ab: same father only
+  | 'maternalSibling' // akh/ukht li-umm: same mother only (sex-neutral for shares)
   | 'grandfather'
   | 'grandmother'
   | 'grandson'
