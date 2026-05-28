@@ -48,12 +48,17 @@ export type Asset =
 
 // Any subset of editable fields across all asset kinds. `id` and `kind`
 // are fixed once an asset is created, so callers can only patch the rest.
-export type AssetPatch = Partial<
-  Omit<
-    CashAsset & GoldAsset & RealEstateAsset & VehicleAsset & OtherAsset,
-    'id' | 'kind'
-  >
->;
+// Listed explicitly rather than derived from an intersection of the union
+// members: intersecting their conflicting `kind` literals collapses to
+// `never` and breaks the field types (TS reports "not assignable to
+// 'undefined'" on every patch).
+export type AssetPatch = Partial<{
+  label: string;
+  value: number;
+  grams: number;
+  description: string;
+  shares: number;
+}>;
 
 export type Deceased = {
   name: string;
