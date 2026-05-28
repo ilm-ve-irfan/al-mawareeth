@@ -9,17 +9,21 @@ import type { ReactNode } from 'react';
 
 import {
   type Asset,
+  type AssetKind,
+  type AssetPatch,
+  type Currency,
   type Deceased,
   type FormData,
   emptyFormData,
-  makeId,
+  makeAsset,
 } from './types';
 
 type FormContextValue = {
   data: FormData;
   setDeceased: (patch: Partial<Deceased>) => void;
-  addAsset: (asset?: Partial<Asset>) => void;
-  updateAsset: (id: string, patch: Partial<Asset>) => void;
+  setCurrency: (currency: Currency) => void;
+  addAsset: (kind: AssetKind) => void;
+  updateAsset: (id: string, patch: AssetPatch) => void;
   removeAsset: (id: string) => void;
   setLiabilities: (value: number) => void;
   reset: () => void;
@@ -34,20 +38,20 @@ export function FormProvider({ children }: { children: ReactNode }) {
     setData((prev) => ({ ...prev, deceased: { ...prev.deceased, ...patch } }));
   }, []);
 
-  const addAsset = useCallback((asset?: Partial<Asset>) => {
-    setData((prev) => ({
-      ...prev,
-      assets: [
-        ...prev.assets,
-        { type: 'cash', value: 0, ...asset, id: makeId('asset') },
-      ],
-    }));
+  const setCurrency = useCallback((currency: Currency) => {
+    setData((prev) => ({ ...prev, currency }));
   }, []);
 
-  const updateAsset = useCallback((id: string, patch: Partial<Asset>) => {
+  const addAsset = useCallback((kind: AssetKind) => {
+    setData((prev) => ({ ...prev, assets: [...prev.assets, makeAsset(kind)] }));
+  }, []);
+
+  const updateAsset = useCallback((id: string, patch: AssetPatch) => {
     setData((prev) => ({
       ...prev,
-      assets: prev.assets.map((a) => (a.id === id ? { ...a, ...patch } : a)),
+      assets: prev.assets.map((a) =>
+        a.id === id ? ({ ...a, ...patch } as Asset) : a,
+      ),
     }));
   }, []);
 
@@ -68,13 +72,23 @@ export function FormProvider({ children }: { children: ReactNode }) {
     () => ({
       data,
       setDeceased,
+      setCurrency,
       addAsset,
       updateAsset,
       removeAsset,
       setLiabilities,
       reset,
     }),
-    [data, setDeceased, addAsset, updateAsset, removeAsset, setLiabilities, reset],
+    [
+      data,
+      setDeceased,
+      setCurrency,
+      addAsset,
+      updateAsset,
+      removeAsset,
+      setLiabilities,
+      reset,
+    ],
   );
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
