@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import * as SplashScreen from 'expo-splash-screen';
 
 import RootStack from './navigation/RootStack';
+import { FormProvider } from './src/form/FormContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -43,10 +44,12 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <RootStack />
-        <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
-      </NavigationContainer>
+      <FormProvider>
+        <NavigationContainer>
+          <RootStack />
+          <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+        </NavigationContainer>
+      </FormProvider>
     </SafeAreaProvider>
   );
 }
