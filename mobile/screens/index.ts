@@ -10,6 +10,5 @@
  */
 export { default as WelcomeScreen } from './Welcome';
 export { default as DeceasedInfoScreen } from './DeceasedInfo';
-export { default as AssetsLiabilitiesScreen } from './AssetsLiabilities';
 export { default as FamilyDetailsScreen } from './FamilyDetails';
 export { default as SummaryScreen } from './Summary';

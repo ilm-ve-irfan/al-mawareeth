@@ -172,7 +172,7 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
 
         <Button
           label={t('actions.next')}
-          onPress={() => navigation.navigate('AssetsLiabilities')}
+          onPress={() => navigation.navigate('FamilyDetails')}
         />
       </ScrollView>
     </View>

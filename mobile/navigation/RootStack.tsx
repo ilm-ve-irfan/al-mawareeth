@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import {
   WelcomeScreen,
   DeceasedInfoScreen,
-  AssetsLiabilitiesScreen,
   FamilyDetailsScreen,
   SummaryScreen,
 } from '../screens';
@@ -35,11 +34,6 @@ export default function RootStack() {
         name="DeceasedInfo"
         component={DeceasedInfoScreen}
         options={{ title: t('deceased.title') }}
-      />
-      <Stack.Screen
-        name="AssetsLiabilities"
-        component={AssetsLiabilitiesScreen}
-        options={{ title: t('assets.title') }}
       />
       <Stack.Screen
         name="FamilyDetails"

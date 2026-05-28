@@ -12,7 +12,6 @@
 export type RootStackParamList = {
   Welcome: undefined;
   DeceasedInfo: undefined;
-  AssetsLiabilities: undefined;
   FamilyDetails: undefined;
   Summary: undefined;
 };
