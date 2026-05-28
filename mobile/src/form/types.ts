@@ -67,12 +67,26 @@ export type Deceased = {
   wasiyaAmount: number; // in the estate currency
 };
 
-// Heir.relation is a loose string for now; it will be narrowed to a union
-// once the heir question tree is modelled from the farā'iḍ spec.
+// Relations a heir can have to the deceased. Extend as the question tree
+// grows; only relations the tree actually collects need to be used.
+export type HeirRelation =
+  | 'husband'
+  | 'wife'
+  | 'son'
+  | 'daughter'
+  | 'father'
+  | 'mother'
+  | 'brother'
+  | 'sister'
+  | 'grandfather'
+  | 'grandmother'
+  | 'grandson'
+  | 'granddaughter';
+
 export type Heir = {
   id: string;
   name: string;
-  relation: string;
+  relation: HeirRelation;
 };
 
 export type FormData = {

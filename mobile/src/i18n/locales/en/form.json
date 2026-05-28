@@ -62,7 +62,25 @@
   },
   "family": {
     "title": "Family Details",
-    "subtitle": "Add the surviving heirs."
+    "subtitle": "Answer the questions about the surviving heirs.",
+    "question": "Question {{n}}",
+    "yes": "Yes",
+    "no": "No",
+    "done": "All questions answered.",
+    "q": {
+      "spouse": "Was the deceased ever married?",
+      "children": "Are there children?",
+      "spouseAlive": "Is the surviving spouse still alive?",
+      "sons": "Sons",
+      "daughters": "Daughters",
+      "wives": "Wives",
+      "husband": "Husband"
+    },
+    "add": "Add",
+    "remove": "Remove",
+    "continue": "Continue",
+    "namePlaceholder": "Name",
+    "max": "Up to {{count}}"
   },
   "summary": {
     "title": "Summary",

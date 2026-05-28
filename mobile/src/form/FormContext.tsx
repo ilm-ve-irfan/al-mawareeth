@@ -14,8 +14,10 @@ import {
   type Currency,
   type Deceased,
   type FormData,
+  type HeirRelation,
   emptyFormData,
   makeAsset,
+  makeId,
 } from './types';
 
 type FormContextValue = {
@@ -26,6 +28,8 @@ type FormContextValue = {
   updateAsset: (id: string, patch: AssetPatch) => void;
   removeAsset: (id: string) => void;
   setLiabilities: (value: number) => void;
+  addHeir: (heir: { relation: HeirRelation; name: string }) => void;
+  removeHeir: (id: string) => void;
   reset: () => void;
 };
 
@@ -66,6 +70,23 @@ export function FormProvider({ children }: { children: ReactNode }) {
     setData((prev) => ({ ...prev, liabilities: value }));
   }, []);
 
+  const addHeir = useCallback(
+    (heir: { relation: HeirRelation; name: string }) => {
+      setData((prev) => ({
+        ...prev,
+        heirs: [...prev.heirs, { id: makeId('heir'), ...heir }],
+      }));
+    },
+    [],
+  );
+
+  const removeHeir = useCallback((id: string) => {
+    setData((prev) => ({
+      ...prev,
+      heirs: prev.heirs.filter((h) => h.id !== id),
+    }));
+  }, []);
+
   const reset = useCallback(() => setData(emptyFormData()), []);
 
   const value = useMemo(
@@ -77,6 +98,8 @@ export function FormProvider({ children }: { children: ReactNode }) {
       updateAsset,
       removeAsset,
       setLiabilities,
+      addHeir,
+      removeHeir,
       reset,
     }),
     [
@@ -87,6 +110,8 @@ export function FormProvider({ children }: { children: ReactNode }) {
       updateAsset,
       removeAsset,
       setLiabilities,
+      addHeir,
+      removeHeir,
       reset,
     ],
   );
