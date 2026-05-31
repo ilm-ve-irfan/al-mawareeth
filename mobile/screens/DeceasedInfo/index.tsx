@@ -71,6 +71,10 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
   // up to one third when computing what reaches the heirs.
   const forDistribution = net - Math.min(wasiyaAmount, maxWasiyaValue);
 
+  // An asset added via "+" must get a value before the user can continue.
+  // (Description stays optional; gold's value is derived from grams × price.)
+  const hasIncompleteAsset = data.assets.some((a) => a.value <= 0);
+
   return (
     <View style={[styles.root, { backgroundColor: colors.background }]}>
       <ScrollView
@@ -191,9 +195,14 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
           />
         </Card>
 
+        {hasIncompleteAsset ? (
+          <Text variant="caption">{t('assets.incompleteHint')}</Text>
+        ) : null}
+
         <Button
           label={t('actions.next')}
           onPress={() => navigation.navigate('FamilyDetails')}
+          disabled={hasIncompleteAsset}
         />
       </ScrollView>
     </View>
@@ -201,7 +210,7 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
 }
 
 // Inline editor for a single asset, shown under its type row. Renders the
-// kind-specific unit field(s) plus the value field used for the estate total.
+// kind-specific unit field(s) plus the value used for the estate total.
 function AssetEditor({ asset }: { asset: Asset }) {
   const colors = useColors();
   const { t } = useTranslation('form');
@@ -211,13 +220,44 @@ function AssetEditor({ asset }: { asset: Asset }) {
   return (
     <View style={[styles.editor, { borderTopColor: colors.divider }]}>
       {asset.kind === 'gold' ? (
-        <TextField
-          label={t('assets.gold.grams')}
-          value={asset.grams ? String(asset.grams) : ''}
-          onChangeText={(text) => updateAsset(asset.id, { grams: toNumber(text) })}
-          keyboardType="numeric"
-          placeholder="0"
-        />
+        <>
+          <TextField
+            label={t('assets.gold.grams')}
+            value={asset.grams ? String(asset.grams) : ''}
+            onChangeText={(text) => {
+              const grams = toNumber(text);
+              // Keep the derived total value in sync: grams × price/gram.
+              updateAsset(asset.id, {
+                grams,
+                value: grams * asset.pricePerGram,
+              });
+            }}
+            keyboardType="numeric"
+            placeholder="0"
+            valid={asset.grams > 0}
+          />
+          <TextField
+            label={`${t('assets.gold.pricePerGram')} (${currencyLabel})`}
+            value={asset.pricePerGram ? String(asset.pricePerGram) : ''}
+            onChangeText={(text) => {
+              const pricePerGram = toNumber(text);
+              updateAsset(asset.id, {
+                pricePerGram,
+                value: asset.grams * pricePerGram,
+              });
+            }}
+            keyboardType="numeric"
+            placeholder="0"
+            valid={asset.pricePerGram > 0}
+          />
+          {/* Read-only computed total that feeds the estate sum. */}
+          <Text variant="caption">
+            {t('assets.totalValue', {
+              currency: currencyLabel,
+              total: Math.round(asset.grams * asset.pricePerGram),
+            })}
+          </Text>
+        </>
       ) : null}
 
       {asset.kind === 'realEstate' ? (
@@ -244,13 +284,18 @@ function AssetEditor({ asset }: { asset: Asset }) {
         />
       ) : null}
 
-      <TextField
-        label={`${t('assets.value')} (${currencyLabel})`}
-        value={asset.value ? String(asset.value) : ''}
-        onChangeText={(text) => updateAsset(asset.id, { value: toNumber(text) })}
-        keyboardType="numeric"
-        placeholder="0"
-      />
+      {/* Value field for every kind EXCEPT gold (gold's value is derived
+          from grams × price/gram above). Required, so it shows ✓ / ✗. */}
+      {asset.kind !== 'gold' ? (
+        <TextField
+          label={`${t('assets.value')} (${currencyLabel})`}
+          value={asset.value ? String(asset.value) : ''}
+          onChangeText={(text) => updateAsset(asset.id, { value: toNumber(text) })}
+          keyboardType="numeric"
+          placeholder="0"
+          valid={asset.value > 0}
+        />
+      ) : null}
 
       <Button
         label={t('assets.remove')}

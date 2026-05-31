@@ -260,7 +260,13 @@ export default function FamilyDetailsScreen({ navigation }: Props) {
   );
 }
 
-// Collect named heirs of one relation, then continue.
+// Decide the ✓/✗ adornment for a name field: nothing while empty, ✓ for a
+// real name, ✗ when it holds only whitespace.
+const nameValidity = (text: string): boolean | undefined =>
+  text.length === 0 ? undefined : text.trim().length > 0 ? true : false;
+
+// Collect named heirs of one relation, then continue. Each added heir can
+// be edited inline or removed.
 function CollectStep({
   node,
   onDone,
@@ -270,17 +276,46 @@ function CollectStep({
 }) {
   const { t } = useTranslation('form');
   const tt = t as unknown as (key: string) => string;
-  const { data, addHeir, removeHeir } = useForm();
+  const { data, addHeir, updateHeir, removeHeir } = useForm();
   const [name, setName] = useState('');
+  // Inline edit state: which heir is open for editing, and its draft name.
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [draft, setDraft] = useState('');
 
   const items = data.heirs.filter((h) => h.relation === node.relation);
   const atMax = node.max != null && items.length >= node.max;
-  const canAdd = name.trim().length > 0 && !atMax;
+  const trimmed = name.trim();
+  const canAdd = trimmed.length > 0 && !atMax;
+  const isEditing = editingId !== null;
+
+  // Unsaved text in the add field or an open edit blocks "continue" so no
+  // entry is lost by advancing past it.
+  const hasPending = trimmed.length > 0;
+  const blockContinue = hasPending || isEditing;
 
   const add = () => {
     if (!canAdd) return;
-    addHeir({ relation: node.relation, name: name.trim() });
+    addHeir({ relation: node.relation, name: trimmed });
     setName('');
+  };
+
+  const startEdit = (h: Heir) => {
+    setEditingId(h.id);
+    setDraft(h.name);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setDraft('');
+  };
+
+  const saveEdit = () => {
+    if (!editingId) return;
+    const value = draft.trim();
+    if (value.length === 0) return;
+    updateHeir(editingId, value);
+    setEditingId(null);
+    setDraft('');
   };
 
   return (
@@ -297,6 +332,9 @@ function CollectStep({
             onChangeText={setName}
             placeholder={t('family.namePlaceholder')}
             editable={!atMax}
+            valid={nameValidity(name)}
+            onSubmitEditing={add}
+            returnKeyType="done"
           />
         </View>
         <Button
@@ -307,18 +345,63 @@ function CollectStep({
         />
       </View>
 
-      {items.map((h) => (
-        <View key={h.id} style={styles.row}>
-          <Text variant="body">{h.name}</Text>
-          <Button
-            label={t('family.remove')}
-            variant="ghost"
-            onPress={() => removeHeir(h.id)}
-          />
-        </View>
-      ))}
+      {items.map((h) =>
+        editingId === h.id ? (
+          // --- Edit mode: replace the row with an inline editor ---------
+          <View key={h.id} style={styles.editRow}>
+            <View style={styles.col}>
+              <TextField
+                value={draft}
+                onChangeText={setDraft}
+                placeholder={t('family.namePlaceholder')}
+                valid={nameValidity(draft)}
+                autoFocus
+                onSubmitEditing={saveEdit}
+                returnKeyType="done"
+              />
+            </View>
+            <Button
+              label={t('family.save')}
+              onPress={saveEdit}
+              disabled={draft.trim().length === 0}
+            />
+            <Button
+              label={t('family.cancel')}
+              variant="ghost"
+              onPress={cancelEdit}
+            />
+          </View>
+        ) : (
+          // --- Read mode: name + edit / remove --------------------------
+          <View key={h.id} style={styles.row}>
+            <Text variant="body">{h.name}</Text>
+            <View style={styles.rowActions}>
+              <Button
+                label={t('family.edit')}
+                variant="ghost"
+                onPress={() => startEdit(h)}
+              />
+              <Button
+                label={t('family.remove')}
+                variant="ghost"
+                onPress={() => removeHeir(h.id)}
+              />
+            </View>
+          </View>
+        ),
+      )}
 
-      <Button label={t('family.continue')} onPress={onDone} />
+      {blockContinue ? (
+        <Text variant="caption">
+          {isEditing ? t('family.editingHint') : t('family.pendingHint')}
+        </Text>
+      ) : null}
+
+      <Button
+        label={t('family.continue')}
+        onPress={onDone}
+        disabled={blockContinue}
+      />
     </Card>
   );
 }
@@ -328,16 +411,16 @@ const styles = StyleSheet.create({
   content: { padding: spacing.lg, gap: spacing.lg },
   answers: { flexDirection: 'row', gap: spacing.sm },
   addRow: { flexDirection: 'row', gap: spacing.sm, alignItems: 'flex-start' },
+  editRow: { flexDirection: 'row', gap: spacing.sm, alignItems: 'flex-start' },
   col: { flex: 1 },
-  nav: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    justifyContent: 'space-between',
-  },
+  // Stacked, full-width nav buttons so "Next" sits as a prominent footer
+  // action like the other screens (instead of a small side-by-side button).
+  nav: { gap: spacing.sm },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     gap: spacing.sm,
   },
+  rowActions: { flexDirection: 'row', gap: spacing.sm, alignItems: 'center' },
 });

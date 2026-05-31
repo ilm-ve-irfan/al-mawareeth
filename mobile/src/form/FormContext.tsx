@@ -29,6 +29,7 @@ type FormContextValue = {
   removeAsset: (id: string) => void;
   setLiabilities: (value: number) => void;
   addHeir: (heir: { relation: HeirRelation; name: string }) => void;
+  updateHeir: (id: string, name: string) => void;
   removeHeir: (id: string) => void;
   reset: () => void;
 };
@@ -80,6 +81,13 @@ export function FormProvider({ children }: { children: ReactNode }) {
     [],
   );
 
+  const updateHeir = useCallback((id: string, name: string) => {
+    setData((prev) => ({
+      ...prev,
+      heirs: prev.heirs.map((h) => (h.id === id ? { ...h, name } : h)),
+    }));
+  }, []);
+
   const removeHeir = useCallback((id: string) => {
     setData((prev) => ({
       ...prev,
@@ -99,6 +107,7 @@ export function FormProvider({ children }: { children: ReactNode }) {
       removeAsset,
       setLiabilities,
       addHeir,
+      updateHeir,
       removeHeir,
       reset,
     }),
@@ -111,6 +120,7 @@ export function FormProvider({ children }: { children: ReactNode }) {
       removeAsset,
       setLiabilities,
       addHeir,
+      updateHeir,
       removeHeir,
       reset,
     ],

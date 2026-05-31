@@ -39,6 +39,12 @@ export type ColorScheme = {
   warning: string;
   error: string;
   info: string;
+
+  // Subtle status-tinted card surfaces. Used for at-a-glance recap cards
+  // (e.g. the estate / debts pair on the summary screen) where a filled
+  // tint communicates polarity without shouting like the full status hue.
+  successSurface: string;
+  errorSurface: string;
 };
 
 export const lightColors: ColorScheme = {
@@ -65,6 +71,9 @@ export const lightColors: ColorScheme = {
   warning: '#D97706',
   error: '#DC2626',
   info: '#2563EB',
+
+  successSurface: '#E3EFE6',
+  errorSurface: '#FBE6E6',
 };
 
 export const darkColors: ColorScheme = {
@@ -91,4 +100,7 @@ export const darkColors: ColorScheme = {
   warning: '#FBBF24',
   error: '#F87171',
   info: '#60A5FA',
+
+  successSurface: '#1C3328',
+  errorSurface: '#3A2122',
 };
