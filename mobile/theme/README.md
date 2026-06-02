@@ -46,6 +46,8 @@ so the same component renders correctly in both schemes.
 | `warning`         | `#D97706` | Caution, pending state                                  |
 | `error`           | `#DC2626` | Destructive actions, validation errors                  |
 | `info`            | `#2563EB` | Informational banners, neutral highlights               |
+| `successSurface`  | `#E3EFE6` | Subtle success tint behind recap cards (estate total)   |
+| `errorSurface`    | `#FBE6E6` | Subtle error tint behind recap cards (debts)            |
 
 ### Dark mode
 
@@ -69,6 +71,8 @@ so the same component renders correctly in both schemes.
 | `warning`         | `#FBBF24` | Lifted amber                                             |
 | `error`           | `#F87171` | Lifted red                                               |
 | `info`            | `#60A5FA` | Lifted blue                                              |
+| `successSurface`  | `#1C3328` | Success-tinted recap card surface                       |
+| `errorSurface`    | `#3A2122` | Error-tinted recap card surface                         |
 
 ## Usage
 
@@ -102,6 +106,9 @@ do not need to know which scheme is active.
   brand.
 - Body content sits on `background`; raised elements use `surface`; grouped
   or inset content uses `surfaceVariant`.
+- Status surfaces (`successSurface`, `errorSurface`) are for subtle filled
+  tints behind at-a-glance recap cards; keep the matching `success` / `error`
+  hue for the text or icon on top.
 - Always pair a background token with its matching `on*` token for text and
   icons so contrast survives both schemes.
 - Never inline hex codes in screens — add a new semantic token here instead.

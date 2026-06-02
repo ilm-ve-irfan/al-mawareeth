@@ -28,7 +28,7 @@ export default function RootStack() {
       <Stack.Screen
         name="Welcome"
         component={WelcomeScreen}
-        options={{ title: t('welcome.title') }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="DeceasedInfo"

@@ -11,8 +11,14 @@
     "en": "English"
   },
   "welcome": {
-    "title": "حساب المواريث",
-    "subtitle": "احسب توزيع التركة وفقاً لأحكام الميراث في الشريعة الإسلامية."
+    "title": "حاسبة المواريث الإسلامية",
+    "subtitle": "احسب توزيع التركة وفقاً لأحكام الميراث في الشريعة الإسلامية.",
+    "brand": "العلم والعرفان",
+    "brandSubtitle": "مركز العلوم الإسلامية",
+    "chooseLanguage": "اختر اللغة",
+    "basmala": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+    "start": "ابدأ الحساب",
+    "moreInfo": "المزيد عن المعلومات"
   },
   "deceased": {
     "title": "بيانات المتوفى",
@@ -41,6 +47,8 @@
     "value": "القيمة",
     "description": "الوصف (اختياري)",
     "remove": "حذف",
+    "totalValue": "القيمة الإجمالية: {{currency}} {{total}}",
+    "incompleteHint": "أدخل قيمة كل أصل أو احذفه للمتابعة",
     "types": {
       "cash": "نقد / بنك",
       "gold": "ذهب",
@@ -49,7 +57,8 @@
       "other": "أخرى"
     },
     "gold": {
-      "grams": "الوزن (غرام)"
+      "grams": "الوزن (غرام)",
+      "pricePerGram": "سعر الغرام"
     },
     "realEstate": {
       "description": "وصف العقار",
@@ -76,18 +85,18 @@
       "spouseAlive": "هل الطرف الآخر على قيد الحياة؟",
       "sons": "أبناء (الذكور)",
       "daughters": "البنات (إناث)",
-      "wives": "عدد الزوجات",
+      "wives": "الزوجات",
       "husband": "الزوج",
       "father": "هل والد المتوفى على قيد الحياة؟",
       "mother": "هل والدة المتوفى على قيد الحياة؟",
       "grandfather": "هل الجد (وإن علا) على قيد الحياة؟",
       "maternalGrandmother": "هل الجدة لأم (وإن علت) على قيد الحياة؟",
       "paternalGrandmother": "هل الجدة لأب (وإن علت) على قيد الحياة؟",
-      "maternalSiblings": "عدد الإخوة لأم (ذكور وإناث)",
-      "fullBrothers": "عدد الإخوة الأشقاء (ذكور)",
-      "fullSisters": "عدد الأخوات الشقيقات (إناث)",
-      "paternalBrothers": "عدد الإخوة لأب (ذكور)",
-      "paternalSisters": "عدد الأخوات لأب (إناث)",
+      "maternalSiblings": "الإخوة لأم (ذكور وإناث)",
+      "fullBrothers": "الإخوة الأشقاء (ذكور)",
+      "fullSisters": "الأخوات الشقيقات (إناث)",
+      "paternalBrothers": "الإخوة لأب (ذكور)",
+      "paternalSisters": "الأخوات لأب (إناث)",
       "fullBrothersSons": "هل يوجد أبناء للإخوة الأشقاء؟",
       "paternalBrothersSons": "هل يوجد ابن أخ لأب؟",
       "fullPaternalUncle": "هل يوجد عمّ شقيق؟",
@@ -98,12 +107,54 @@
     },
     "add": "إضافة",
     "remove": "حذف",
+    "edit": "تعديل",
+    "save": "حفظ",
+    "cancel": "إلغاء",
     "continue": "متابعة",
     "namePlaceholder": "الاسم",
-    "max": "حتى {{count}}"
+    "pendingHint": "أضف الاسم أو امسح الحقل للمتابعة",
+    "max": "حتى {{count}}",
+    "collect": {
+      "father": "اسم الأب",
+      "mother": "اسم الأم",
+      "grandfather": "اسم الجد",
+      "maternalGrandmother": "اسم الجدة لأم",
+      "paternalGrandmother": "اسم الجدة لأب"
+    },
+    "editingHint": "احفظ التعديل أو ألغِه للمتابعة"
+  },
+  "relations": {
+    "husband": "الزوج",
+    "wife": "الزوجة",
+    "son": "ابن",
+    "daughter": "بنت",
+    "father": "الأب",
+    "mother": "الأم",
+    "fullBrother": "أخ شقيق",
+    "fullSister": "أخت شقيقة",
+    "paternalBrother": "أخ لأب",
+    "paternalSister": "أخت لأب",
+    "maternalSibling": "أخ/أخت لأم",
+    "grandfather": "الجد",
+    "grandmother": "الجدة",
+    "maternalGrandmother": "الجدة لأم",
+    "paternalGrandmother": "الجدة لأب",
+    "grandson": "ابن الابن",
+    "granddaughter": "بنت الابن"
   },
   "summary": {
     "title": "الملخص",
-    "subtitle": "راجع وأكد قبل الحساب."
+    "subtitle": "راجع وأكد قبل الحساب.",
+    "deceasedLabel": "المتوفى",
+    "noName": "غير محدد",
+    "estate": "التركة",
+    "debts": "الديون",
+    "heirs": "الورثة",
+    "noHeirs": "لم تتم إضافة ورثة.",
+    "calculate": "احسب الميراث",
+    "wasiya": "الوصية",
+    "wasiyaCapped": "محدودة بثلث التركة (الحد الأقصى {{max}})",
+    "times": "{{n}}×",
+    "listSeparator": "، "
   }
 }

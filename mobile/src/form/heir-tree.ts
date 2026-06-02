@@ -141,7 +141,9 @@ export const heirTree: HeirTree = {
       text: 'family.q.father',
       // father dead -> ask grandfather, then evaluate the two sibling gates.
       next: {
-        yes: [],
+        // father alive -> let the user name him; father dead -> ask grandfather
+        // then the two sibling gates.
+        yes: ['fatherName'],
         no: ['grandfather', 'maternalSiblingsGuard', 'fullSiblingsGuard'],
       },
     },
@@ -149,7 +151,23 @@ export const heirTree: HeirTree = {
       id: 'grandfather',
       kind: 'boolean',
       text: 'family.q.grandfather',
-      next: { yes: [], no: [] },
+      next: { yes: ['grandfatherName'], no: [] },
+    },
+    fatherName: {
+      id: 'fatherName',
+      kind: 'collect',
+      text: 'family.collect.father',
+      relation: 'father',
+      max: 1,
+      next: [],
+    },
+    grandfatherName: {
+      id: 'grandfatherName',
+      kind: 'collect',
+      text: 'family.collect.grandfather',
+      relation: 'grandfather',
+      max: 1,
+      next: [],
     },
 
     // Maternal siblings (kalala): grandfather dead AND no descendants.
@@ -222,13 +240,33 @@ export const heirTree: HeirTree = {
       id: 'mother',
       kind: 'boolean',
       text: 'family.q.mother',
-      next: { yes: [], no: ['maternalGrandmother', 'paternalGrandmotherGuard'] },
+      next: {
+        // mother alive -> let the user name her; mother dead -> ask grandmothers.
+        yes: ['motherName'],
+        no: ['maternalGrandmother', 'paternalGrandmotherGuard'],
+      },
     },
     maternalGrandmother: {
       id: 'maternalGrandmother',
       kind: 'boolean',
       text: 'family.q.maternalGrandmother',
-      next: { yes: [], no: [] },
+      next: { yes: ['maternalGrandmotherName'], no: [] },
+    },
+    motherName: {
+      id: 'motherName',
+      kind: 'collect',
+      text: 'family.collect.mother',
+      relation: 'mother',
+      max: 1,
+      next: [],
+    },
+    maternalGrandmotherName: {
+      id: 'maternalGrandmotherName',
+      kind: 'collect',
+      text: 'family.collect.maternalGrandmother',
+      relation: 'maternalGrandmother',
+      max: 1,
+      next: [],
     },
     // Paternal grandmother only if grandfather dead AND maternal grandmother dead.
     paternalGrandmotherGuard: {
@@ -244,7 +282,15 @@ export const heirTree: HeirTree = {
       id: 'paternalGrandmother',
       kind: 'boolean',
       text: 'family.q.paternalGrandmother',
-      next: { yes: [], no: [] },
+      next: { yes: ['paternalGrandmotherName'], no: [] },
+    },
+    paternalGrandmotherName: {
+      id: 'paternalGrandmotherName',
+      kind: 'collect',
+      text: 'family.collect.paternalGrandmother',
+      relation: 'paternalGrandmother',
+      max: 1,
+      next: [],
     },
 
     // --- Residuary (asaba) chain ---

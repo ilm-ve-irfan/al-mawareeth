@@ -11,8 +11,14 @@
     "en": "English"
   },
   "welcome": {
-    "title": "Inheritance Calculation",
-    "subtitle": "Calculate the distribution of an estate according to Islamic inheritance law."
+    "title": "Islamic Inheritance Calculator",
+    "subtitle": "Calculate the distribution of an estate according to Islamic inheritance law.",
+    "brand": "العلم والعرفان",
+    "brandSubtitle": "Islamic Sciences Center",
+    "chooseLanguage": "Choose language",
+    "basmala": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+    "start": "Start calculation",
+    "moreInfo": "More information"
   },
   "deceased": {
     "title": "Deceased Information",
@@ -41,6 +47,8 @@
     "value": "Value",
     "description": "Description (optional)",
     "remove": "Remove",
+    "totalValue": "Total value: {{currency}} {{total}}",
+    "incompleteHint": "Enter a value for each asset or remove it to continue",
     "types": {
       "cash": "Cash / Bank",
       "gold": "Gold",
@@ -49,7 +57,8 @@
       "other": "Other"
     },
     "gold": {
-      "grams": "Weight (grams)"
+      "grams": "Weight (grams)",
+      "pricePerGram": "Price per gram"
     },
     "realEstate": {
       "description": "Property description",
@@ -98,12 +107,54 @@
     },
     "add": "Add",
     "remove": "Remove",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
     "continue": "Continue",
     "namePlaceholder": "Name",
-    "max": "Up to {{count}}"
+    "pendingHint": "Add the name or clear the field to continue",
+    "max": "Up to {{count}}",
+    "collect": {
+      "father": "Father's name",
+      "mother": "Mother's name",
+      "grandfather": "Grandfather's name",
+      "maternalGrandmother": "Maternal grandmother's name",
+      "paternalGrandmother": "Paternal grandmother's name"
+    },
+    "editingHint": "Save or cancel the edit to continue"
+  },
+  "relations": {
+    "husband": "Husband",
+    "wife": "Wife",
+    "son": "Son",
+    "daughter": "Daughter",
+    "father": "Father",
+    "mother": "Mother",
+    "fullBrother": "Full brother",
+    "fullSister": "Full sister",
+    "paternalBrother": "Paternal half-brother",
+    "paternalSister": "Paternal half-sister",
+    "maternalSibling": "Maternal sibling",
+    "grandfather": "Grandfather",
+    "grandmother": "Grandmother",
+    "maternalGrandmother": "Maternal grandmother",
+    "paternalGrandmother": "Paternal grandmother",
+    "grandson": "Grandson",
+    "granddaughter": "Granddaughter"
   },
   "summary": {
     "title": "Summary",
-    "subtitle": "Review and confirm before calculation."
+    "subtitle": "Review and confirm before calculation.",
+    "deceasedLabel": "Deceased",
+    "noName": "Not specified",
+    "estate": "Total estate",
+    "debts": "Debts",
+    "heirs": "Heirs",
+    "noHeirs": "No heirs added.",
+    "calculate": "Calculate inheritance",
+    "wasiya": "Bequest (wasiya)",
+    "wasiyaCapped": "Capped at one third of the estate (max {{max}})",
+    "times": "{{n}}×",
+    "listSeparator": ", "
   }
 }

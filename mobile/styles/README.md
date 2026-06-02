@@ -57,11 +57,12 @@ Every consumer composes from `useWidgetStyles()`. The hook calls
 | ----------- | ----------------------------------------------------------------- |
 | `button`    | `base`, `primary`, `secondary`, `ghost`, `disabled`, `pressed`, `labelPrimary`, `labelSecondary`, `labelGhost` |
 | `card`      | `base`                                                            |
-| `input`     | `wrapper`, `label`, `field`, `fieldError`, `error`                |
+| `input`     | `wrapper`, `label`, `box`, `boxError`, `control`, `adornment`, `adornmentOk`, `adornmentBad`, `error` |
 | `text`      | `display`, `title`, `body`, `caption`, `label`                    |
 | `progress`  | `container`, `track`, `segment`, `segmentDone`, `segmentCurrent`  |
 | `segmented` | `container`, `option`, `optionActive`, `label`, `labelActive`     |
-| `select`    | `trigger`, `triggerLabel`, `chevron`, `backdrop`, `sheet`, `option`, `optionLabel`, `optionSelected` |
+| `select`    | `trigger`, `triggerLabel`, `triggerDisabled`, `chevron`, `backdrop`, `menu`, `option`, `optionLabel`, `optionSelected` |
+| `summary`   | `statsRow`, `statCard`, `statEstate`, `statDebts`, `debtAmount`, `deductionRow`, `deductionLabel`, `deductionValue`, `deductionNote`, `netBar`, `netLabel`, `netValue`, `netNote`, `heirRow`, `heirRowFirst`, `heirInfo`, `badge`, `badgeLabel`, `empty` |
 
 > `Switch` has no namespace: it wraps React Native's native `Switch` and
 > takes its on/off colors directly from `useColors()`.

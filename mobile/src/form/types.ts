@@ -30,7 +30,11 @@ type AssetBase = {
 };
 
 export type CashAsset = AssetBase & { kind: 'cash' };
-export type GoldAsset = AssetBase & { kind: 'gold'; grams: number };
+export type GoldAsset = AssetBase & {
+  kind: 'gold';
+  grams: number;
+  pricePerGram: number; // estate-currency price of one gram; value = grams × this
+};
 export type RealEstateAsset = AssetBase & {
   kind: 'realEstate';
   description: string;
@@ -56,6 +60,7 @@ export type AssetPatch = Partial<{
   label: string;
   value: number;
   grams: number;
+  pricePerGram: number;
   description: string;
   shares: number;
 }>;
@@ -83,6 +88,8 @@ export type HeirRelation =
   | 'maternalSibling' // akh/ukht li-umm: same mother only (sex-neutral for shares)
   | 'grandfather'
   | 'grandmother'
+  | 'maternalGrandmother' // jadda li-umm: grandmother on the mother's side
+  | 'paternalGrandmother' // jadda li-ab: grandmother on the father's side
   | 'grandson'
   | 'granddaughter';
 
@@ -122,7 +129,7 @@ export const makeAsset = (kind: AssetKind): Asset => {
   const base = { id: makeId('asset'), value: 0 };
   switch (kind) {
     case 'gold':
-      return { ...base, kind, grams: 0 };
+      return { ...base, kind, grams: 0, pricePerGram: 0 };
     case 'realEstate':
       return { ...base, kind, description: '', shares: PROPERTY_SHARES };
     case 'vehicle':
