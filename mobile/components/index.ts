@@ -8,3 +8,15 @@ export type { TextProps } from './Text';
 
 export { TextField } from './TextField';
 export type { TextFieldProps } from './TextField';
+
+export { StepIndicator } from './StepIndicator';
+export type { StepIndicatorProps } from './StepIndicator';
+
+export { SegmentedControl } from './SegmentedControl';
+export type { SegmentedControlProps, SegmentedOption } from './SegmentedControl';
+
+export { Switch } from './Switch';
+export type { SwitchProps } from './Switch';
+
+export { Select } from './Select';
+export type { SelectProps, SelectOption } from './Select';

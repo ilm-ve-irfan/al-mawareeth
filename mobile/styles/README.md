@@ -53,12 +53,18 @@ Every consumer composes from `useWidgetStyles()`. The hook calls
 
 `useWidgetStyles()` returns a namespaced `StyleSheet` per widget:
 
-| Namespace | Keys                                                              |
-| --------- | ----------------------------------------------------------------- |
-| `button`  | `base`, `primary`, `secondary`, `ghost`, `disabled`, `pressed`, `labelPrimary`, `labelSecondary`, `labelGhost` |
-| `card`    | `base`                                                            |
-| `input`   | `wrapper`, `label`, `field`, `fieldError`, `error`                |
-| `text`    | `display`, `title`, `body`, `caption`, `label`                    |
+| Namespace   | Keys                                                              |
+| ----------- | ----------------------------------------------------------------- |
+| `button`    | `base`, `primary`, `secondary`, `ghost`, `disabled`, `pressed`, `labelPrimary`, `labelSecondary`, `labelGhost` |
+| `card`      | `base`                                                            |
+| `input`     | `wrapper`, `label`, `field`, `fieldError`, `error`                |
+| `text`      | `display`, `title`, `body`, `caption`, `label`                    |
+| `progress`  | `container`, `track`, `segment`, `segmentDone`, `segmentCurrent`  |
+| `segmented` | `container`, `option`, `optionActive`, `label`, `labelActive`     |
+| `select`    | `trigger`, `triggerLabel`, `chevron`, `backdrop`, `sheet`, `option`, `optionLabel`, `optionSelected` |
+
+> `Switch` has no namespace: it wraps React Native's native `Switch` and
+> takes its on/off colors directly from `useColors()`.
 
 ## Usage
 

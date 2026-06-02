@@ -8,7 +8,7 @@ i18n
   .use(languageDetector)
   .init({
     defaultNS: 'common',
-    ns: ['common', 'settings', 'theme'],
+    ns: ['common', 'settings', 'theme', 'form'],
     resources,
     fallbackLng: 'en',
     supportedLngs: ['en', 'ar'],

@@ -1,0 +1,109 @@
+{
+  "step": "Step {{current}} of {{total}}",
+  "actions": {
+    "next": "Next",
+    "back": "Back",
+    "start": "Start",
+    "finish": "Finish"
+  },
+  "lang": {
+    "ar": "العربية",
+    "en": "English"
+  },
+  "welcome": {
+    "title": "Inheritance Calculation",
+    "subtitle": "Calculate the distribution of an estate according to Islamic inheritance law."
+  },
+  "deceased": {
+    "title": "Deceased Information",
+    "subtitle": "Enter the details of the deceased person.",
+    "name": "Name of the deceased",
+    "namePlaceholder": "Full name",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "hasWasiya": "Is there a bequest (wasiya)?",
+    "wasiyaAmount": "Bequest amount",
+    "wasiyaHint": "A bequest may not exceed one third of the estate.",
+    "wasiyaMax": "Maximum (one third): {{max}}",
+    "wasiyaExceeds": "Exceeds the legal third (max {{max}})"
+  },
+  "currency": {
+    "label": "Currency",
+    "SAR": "Riyal (SAR)",
+    "USD": "Dollar (USD)",
+    "EUR": "Euro (EUR)"
+  },
+  "assets": {
+    "title": "Estate assets",
+    "subtitle": "Add the deceased's assets.",
+    "add": "Add",
+    "value": "Value",
+    "description": "Description (optional)",
+    "remove": "Remove",
+    "types": {
+      "cash": "Cash / Bank",
+      "gold": "Gold",
+      "realEstate": "Real estate / Land",
+      "vehicle": "Vehicle",
+      "other": "Other"
+    },
+    "gold": {
+      "grams": "Weight (grams)"
+    },
+    "realEstate": {
+      "description": "Property description",
+      "shares": "Shares (sahm)"
+    }
+  },
+  "netEstate": {
+    "label": "Net estate for distribution",
+    "afterWasiya": "After deducting debts and bequest"
+  },
+  "liabilities": {
+    "label": "Debts & expenses"
+  },
+  "family": {
+    "title": "Family Details",
+    "subtitle": "Answer the questions about the surviving heirs.",
+    "question": "Question {{n}}",
+    "yes": "Yes",
+    "no": "No",
+    "done": "All questions answered.",
+    "q": {
+      "spouse": "Was the deceased ever married?",
+      "children": "Are there sons or daughters?",
+      "spouseAlive": "Is the surviving spouse still alive?",
+      "sons": "Sons (male)",
+      "daughters": "Daughters (female)",
+      "wives": "Wives",
+      "husband": "Husband",
+      "father": "Is the deceased's father alive?",
+      "mother": "Is the deceased's mother alive?",
+      "grandfather": "Is the grandfather (however high) alive?",
+      "maternalGrandmother": "Is the maternal grandmother (however high) alive?",
+      "paternalGrandmother": "Is the paternal grandmother (however high) alive?",
+      "maternalSiblings": "Maternal siblings (brothers and sisters)",
+      "fullBrothers": "Full brothers (male)",
+      "fullSisters": "Full sisters (female)",
+      "paternalBrothers": "Paternal half-brothers (male)",
+      "paternalSisters": "Paternal half-sisters (female)",
+      "fullBrothersSons": "Are there sons of full brothers?",
+      "paternalBrothersSons": "Are there sons of paternal half-brothers?",
+      "fullPaternalUncle": "Is there a full paternal uncle (father's full brother)?",
+      "paternalUncle": "Is there a paternal uncle (father's paternal half-brother)?",
+      "fullPaternalUncleSon": "Is there a son of a full paternal uncle?",
+      "paternalUncleSon": "Is there a son of a paternal uncle?",
+      "distantKindred": "Are there any distant kindred (dhawu al-arham): paternal aunt, maternal uncle/aunt, brother's daughter, uncle's daughter, daughter's son, etc.?"
+    },
+    "add": "Add",
+    "remove": "Remove",
+    "continue": "Continue",
+    "namePlaceholder": "Name",
+    "max": "Up to {{count}}"
+  },
+  "summary": {
+    "title": "Summary",
+    "subtitle": "Review and confirm before calculation."
+  }
+}
