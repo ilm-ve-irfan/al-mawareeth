@@ -241,6 +241,15 @@ export default function FamilyDetailsScreen({ navigation }: Props) {
           </Card>
         ) : null}
 
+        {/* Unborn child warning — shown as soon as one is collected */}
+        {data.heirs.some((h) => h.relation === 'unborn_unknown') ? (
+          <Card>
+            <Text variant="label" style={{ color: colors.warning }}>
+              {'⚠️ ' + t('summary.unbornWarning')}
+            </Text>
+          </Card>
+        ) : null}
+
         <View style={styles.nav}>
           <Button
             label={t('actions.back')}

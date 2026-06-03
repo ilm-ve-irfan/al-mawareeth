@@ -20,3 +20,6 @@ export type { SwitchProps } from './Switch';
 
 export { Select } from './Select';
 export type { SelectProps, SelectOption } from './Select';
+
+export { InfoModal } from './InfoModal';
+export type { InfoModalProps } from './InfoModal';

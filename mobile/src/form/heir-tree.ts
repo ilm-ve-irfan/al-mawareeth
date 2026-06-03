@@ -123,6 +123,50 @@ export const heirTree: HeirTree = {
       text: 'family.q.wives',
       relation: 'wife',
       max: 4,
+      next: ['pregnancyQuestion'],
+    },
+
+    // --- Pregnancy (حمل) — asked only when deceased is male and has wives ---
+    pregnancyQuestion: {
+      id: 'pregnancyQuestion',
+      kind: 'boolean',
+      text: 'family.q.pregnancy',
+      next: { yes: ['pregnancyGenderKnown'], no: [] },
+    },
+    pregnancyGenderKnown: {
+      id: 'pregnancyGenderKnown',
+      kind: 'boolean',
+      text: 'family.q.pregnancyGenderKnown',
+      next: { yes: ['pregnancyGenderBranch'], no: ['unbornUnknown'] },
+    },
+    pregnancyGenderBranch: {
+      id: 'pregnancyGenderBranch',
+      kind: 'boolean',
+      text: 'family.q.pregnancyIsSon',
+      next: { yes: ['unbornSon'], no: ['unbornDaughter'] },
+    },
+    unbornUnknown: {
+      id: 'unbornUnknown',
+      kind: 'collect',
+      text: 'family.collect.unbornUnknown',
+      relation: 'unborn_unknown',
+      max: 1,
+      next: [],
+    },
+    unbornSon: {
+      id: 'unbornSon',
+      kind: 'collect',
+      text: 'family.collect.unbornSon',
+      relation: 'unborn_son',
+      max: 1,
+      next: [],
+    },
+    unbornDaughter: {
+      id: 'unbornDaughter',
+      kind: 'collect',
+      text: 'family.collect.unbornDaughter',
+      relation: 'unborn_daughter',
+      max: 1,
       next: [],
     },
     husband: {

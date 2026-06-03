@@ -70,7 +70,12 @@
     "afterWasiya": "After deducting debts and bequest"
   },
   "liabilities": {
-    "label": "Debts & expenses"
+    "label": "Debts & expenses",
+    "infoLabel": "About debts & expenses",
+    "infoTitle": "Rights related to the estate",
+    "infoItem1": "Rights tied to estate assets, such as zakat",
+    "infoItem2": "Funeral and burial expenses",
+    "infoItem3": "Outstanding debts owed by the deceased"
   },
   "family": {
     "title": "Family Details",
@@ -103,7 +108,10 @@
       "paternalUncle": "Is there a paternal uncle (father's paternal half-brother)?",
       "fullPaternalUncleSon": "Is there a son of a full paternal uncle?",
       "paternalUncleSon": "Is there a son of a paternal uncle?",
-      "distantKindred": "Are there any distant kindred (dhawu al-arham): paternal aunt, maternal uncle/aunt, brother's daughter, uncle's daughter, daughter's son, etc.?"
+      "distantKindred": "Are there any distant kindred (dhawu al-arham): paternal aunt, maternal uncle/aunt, brother's daughter, uncle's daughter, daughter's son, etc.?",
+      "pregnancy": "Is any of the wives pregnant?",
+      "pregnancyGenderKnown": "Is the gender of the unborn child known?",
+      "pregnancyIsSon": "Is the unborn child a boy?"
     },
     "add": "Add",
     "remove": "Remove",
@@ -119,7 +127,10 @@
       "mother": "Mother's name",
       "grandfather": "Grandfather's name",
       "maternalGrandmother": "Maternal grandmother's name",
-      "paternalGrandmother": "Paternal grandmother's name"
+      "paternalGrandmother": "Paternal grandmother's name",
+      "unbornUnknown": "Mother's name (unborn - gender unknown)",
+      "unbornSon": "Mother's name (unborn - boy)",
+      "unbornDaughter": "Mother's name (unborn - girl)"
     },
     "editingHint": "Save or cancel the edit to continue"
   },
@@ -140,7 +151,10 @@
     "maternalGrandmother": "Maternal grandmother",
     "paternalGrandmother": "Paternal grandmother",
     "grandson": "Grandson",
-    "granddaughter": "Granddaughter"
+    "granddaughter": "Granddaughter",
+    "unborn_unknown": "Unborn (gender unknown)",
+    "unborn_son": "Unborn boy",
+    "unborn_daughter": "Unborn girl"
   },
   "summary": {
     "title": "Summary",
@@ -155,6 +169,7 @@
     "wasiya": "Bequest (wasiya)",
     "wasiyaCapped": "Capped at one third of the estate (max {{max}})",
     "times": "{{n}}×",
-    "listSeparator": ", "
+    "listSeparator": ", ",
+    "unbornWarning": "Notice: There is an unborn child — the share of a son will be reserved until birth, then redistributed."
   }
 }

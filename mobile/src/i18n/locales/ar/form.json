@@ -70,7 +70,12 @@
     "afterWasiya": "بعد خصم الديون والوصية"
   },
   "liabilities": {
-    "label": "الديون والمصاريف"
+    "label": "الديون والمصاريف",
+    "infoLabel": "معلومات عن الديون والمصاريف",
+    "infoTitle": "الحقوق المتعلقة بالتركة",
+    "infoItem1": "الحق المتعلق بعين التركة كالزكاة",
+    "infoItem2": "مؤن التجهيز بالمعروف",
+    "infoItem3": "الديون المرسلة في الذمة"
   },
   "family": {
     "title": "بيانات الورثة",
@@ -103,7 +108,10 @@
       "paternalUncle": "هل يوجد عمّ لأب؟",
       "fullPaternalUncleSon": "هل يوجد ابن عمّ شقيق؟",
       "paternalUncleSon": "هل يوجد ابن عمّ لأب؟",
-      "distantKindred": "هل يوجد أحد من ذوي الأرحام؟ (العمَّة، الخال، الخالة، بنت الأخ، بنت العمّ، ابن البنت... إلخ)"
+      "distantKindred": "هل يوجد أحد من ذوي الأرحام؟ (العمَّة، الخال، الخالة، بنت الأخ، بنت العمّ، ابن البنت... إلخ)",
+      "pregnancy": "هل إحدى الزوجات حامل؟",
+      "pregnancyGenderKnown": "هل جنس الجنين معروف؟",
+      "pregnancyIsSon": "هل الجنين ذكر؟"
     },
     "add": "إضافة",
     "remove": "حذف",
@@ -119,7 +127,10 @@
       "mother": "اسم الأم",
       "grandfather": "اسم الجد",
       "maternalGrandmother": "اسم الجدة لأم",
-      "paternalGrandmother": "اسم الجدة لأب"
+      "paternalGrandmother": "اسم الجدة لأب",
+      "unbornUnknown": "اسم الأم (الحمل - جنس غير معروف)",
+      "unbornSon": "اسم الأم (الحمل - ذكر)",
+      "unbornDaughter": "اسم الأم (الحمل - أنثى)"
     },
     "editingHint": "احفظ التعديل أو ألغِه للمتابعة"
   },
@@ -140,7 +151,10 @@
     "maternalGrandmother": "الجدة لأم",
     "paternalGrandmother": "الجدة لأب",
     "grandson": "ابن الابن",
-    "granddaughter": "بنت الابن"
+    "granddaughter": "بنت الابن",
+    "unborn_unknown": "حمل (جنس غير معروف)",
+    "unborn_son": "حمل ذكر",
+    "unborn_daughter": "حمل أنثى"
   },
   "summary": {
     "title": "الملخص",
@@ -155,6 +169,7 @@
     "wasiya": "الوصية",
     "wasiyaCapped": "محدودة بثلث التركة (الحد الأقصى {{max}})",
     "times": "{{n}}×",
-    "listSeparator": "، "
+    "listSeparator": "، ",
+    "unbornWarning": "تنبيه: يوجد حمل — سيتم حجز نصيب الذكر احتياطياً حتى الولادة وإعادة التوزيع بعدها."
   }
 }
