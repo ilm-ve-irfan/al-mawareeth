@@ -108,10 +108,7 @@
       "paternalUncle": "هل يوجد عمّ لأب؟",
       "fullPaternalUncleSon": "هل يوجد ابن عمّ شقيق؟",
       "paternalUncleSon": "هل يوجد ابن عمّ لأب؟",
-      "distantKindred": "هل يوجد أحد من ذوي الأرحام؟ (العمَّة، الخال، الخالة، بنت الأخ، بنت العمّ، ابن البنت... إلخ)",
-      "pregnancy": "هل إحدى الزوجات حامل؟",
-      "pregnancyGenderKnown": "هل جنس الجنين معروف؟",
-      "pregnancyIsSon": "هل الجنين ذكر؟"
+      "distantKindred": "هل يوجد أحد من ذوي الأرحام؟ (العمَّة، الخال، الخالة، بنت الأخ، بنت العمّ، ابن البنت... إلخ)"
     },
     "add": "إضافة",
     "remove": "حذف",
@@ -127,12 +124,15 @@
       "mother": "اسم الأم",
       "grandfather": "اسم الجد",
       "maternalGrandmother": "اسم الجدة لأم",
-      "paternalGrandmother": "اسم الجدة لأب",
-      "unbornUnknown": "اسم الأم (الحمل - جنس غير معروف)",
-      "unbornSon": "اسم الأم (الحمل - ذكر)",
-      "unbornDaughter": "اسم الأم (الحمل - أنثى)"
+      "paternalGrandmother": "اسم الجدة لأب"
     },
-    "editingHint": "احفظ التعديل أو ألغِه للمتابعة"
+    "editingHint": "احفظ التعديل أو ألغِه للمتابعة",
+    "pregnancyLabel": "هل هي حامل؟",
+    "pregnancyNo": "لا",
+    "pregnancyUnknown": "حامل (جنس غير معروف)",
+    "pregnancySon": "حامل بذكر",
+    "pregnancyDaughter": "حامل بأنثى",
+    "unbornOf": "حمل"
   },
   "relations": {
     "husband": "الزوج",

@@ -108,10 +108,7 @@
       "paternalUncle": "Is there a paternal uncle (father's paternal half-brother)?",
       "fullPaternalUncleSon": "Is there a son of a full paternal uncle?",
       "paternalUncleSon": "Is there a son of a paternal uncle?",
-      "distantKindred": "Are there any distant kindred (dhawu al-arham): paternal aunt, maternal uncle/aunt, brother's daughter, uncle's daughter, daughter's son, etc.?",
-      "pregnancy": "Is any of the wives pregnant?",
-      "pregnancyGenderKnown": "Is the gender of the unborn child known?",
-      "pregnancyIsSon": "Is the unborn child a boy?"
+      "distantKindred": "Are there any distant kindred (dhawu al-arham): paternal aunt, maternal uncle/aunt, brother's daughter, uncle's daughter, daughter's son, etc.?"
     },
     "add": "Add",
     "remove": "Remove",
@@ -127,12 +124,15 @@
       "mother": "Mother's name",
       "grandfather": "Grandfather's name",
       "maternalGrandmother": "Maternal grandmother's name",
-      "paternalGrandmother": "Paternal grandmother's name",
-      "unbornUnknown": "Mother's name (unborn - gender unknown)",
-      "unbornSon": "Mother's name (unborn - boy)",
-      "unbornDaughter": "Mother's name (unborn - girl)"
+      "paternalGrandmother": "Paternal grandmother's name"
     },
-    "editingHint": "Save or cancel the edit to continue"
+    "editingHint": "Save or cancel the edit to continue",
+    "pregnancyLabel": "Is she pregnant?",
+    "pregnancyNo": "No",
+    "pregnancyUnknown": "Pregnant (gender unknown)",
+    "pregnancySon": "Pregnant with a boy",
+    "pregnancyDaughter": "Pregnant with a girl",
+    "unbornOf": "Unborn of"
   },
   "relations": {
     "husband": "Husband",

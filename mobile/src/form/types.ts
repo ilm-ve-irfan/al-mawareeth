@@ -100,6 +100,8 @@ export type Heir = {
   id: string;
   name: string;
   relation: HeirRelation;
+  isUnborn?: boolean;   // true for unborn children (حمل)
+  motherName?: string;  // name of the pregnant wife
 };
 
 export type FormData = {

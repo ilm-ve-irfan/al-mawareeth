@@ -28,7 +28,7 @@ type FormContextValue = {
   updateAsset: (id: string, patch: AssetPatch) => void;
   removeAsset: (id: string) => void;
   setLiabilities: (value: number) => void;
-  addHeir: (heir: { relation: HeirRelation; name: string }) => void;
+  addHeir: (heir: { relation: HeirRelation; name: string; isUnborn?: boolean; motherName?: string }) => void;
   updateHeir: (id: string, name: string) => void;
   removeHeir: (id: string) => void;
   reset: () => void;
@@ -72,7 +72,7 @@ export function FormProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const addHeir = useCallback(
-    (heir: { relation: HeirRelation; name: string }) => {
+    (heir: { relation: HeirRelation; name: string; isUnborn?: boolean; motherName?: string }) => {
       setData((prev) => ({
         ...prev,
         heirs: [...prev.heirs, { id: makeId('heir'), ...heir }],
