@@ -1,12 +1,12 @@
 import { useReducer, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { Button, Card, StepIndicator, Text, TextField } from '../../components';
 import { spacing, useColors } from '../../theme';
 import { useForm } from '../../src/form/FormContext';
-import type { Gender, Heir } from '../../src/form/types';
+import type { Gender, Heir, HeirRelation } from '../../src/form/types';
 import {
   heirTree,
   type CollectNode,
@@ -241,6 +241,15 @@ export default function FamilyDetailsScreen({ navigation }: Props) {
           </Card>
         ) : null}
 
+        {/* Unborn child warning — shown as soon as one is collected */}
+        {data.heirs.some((h) => h.relation === 'unborn_unknown') ? (
+          <Card>
+            <Text variant="label" style={{ color: colors.warning }}>
+              {'⚠️ ' + t('summary.unbornWarning')}
+            </Text>
+          </Card>
+        ) : null}
+
         <View style={styles.nav}>
           <Button
             label={t('actions.back')}
@@ -265,6 +274,95 @@ export default function FamilyDetailsScreen({ navigation }: Props) {
 const nameValidity = (text: string): boolean | undefined =>
   text.length === 0 ? undefined : text.trim().length > 0 ? true : false;
 
+type PregnancyState = 'no' | 'unknown' | 'son' | 'daughter';
+
+// Inline pregnancy widget shown under each wife row.
+// Adds/removes unborn heir automatically when pregnancy state changes.
+function PregnancyPicker({
+  wife,
+}: {
+  wife: Heir;
+}) {
+  const { t } = useTranslation('form');
+  const { data, addHeir, removeHeir } = useForm();
+  const colors = useColors();
+
+  // Find any existing unborn heir linked to this wife.
+  const unborn = data.heirs.find(
+    (h) =>
+      h.isUnborn &&
+      h.motherName === wife.name &&
+      ['son', 'daughter', 'unborn_unknown'].includes(h.relation),
+  );
+
+  const current: PregnancyState = unborn
+    ? unborn.relation === 'son'
+      ? 'son'
+      : unborn.relation === 'daughter'
+      ? 'daughter'
+      : 'unknown'
+    : 'no';
+
+  const select = (next: PregnancyState) => {
+    // Remove existing unborn linked to this wife first.
+    if (unborn) removeHeir(unborn.id);
+    if (next === 'no') return;
+
+    const relation: HeirRelation =
+      next === 'son' ? 'son' : next === 'daughter' ? 'daughter' : 'unborn_unknown';
+
+    const name =
+      next === 'unknown'
+        ? `${t('family.unbornOf')} ${wife.name}`
+        : `${t('family.unbornOf')} ${wife.name}`;
+
+    addHeir({ relation, name, isUnborn: true, motherName: wife.name });
+  };
+
+  const options: { key: PregnancyState; label: string }[] = [
+    { key: 'no', label: t('family.pregnancyNo') },
+    { key: 'unknown', label: t('family.pregnancyUnknown') },
+    { key: 'son', label: t('family.pregnancySon') },
+    { key: 'daughter', label: t('family.pregnancyDaughter') },
+  ];
+
+  return (
+    <View style={styles.pregnancyBox}>
+      <Text variant="caption">{t('family.pregnancyLabel')}</Text>
+      <View style={styles.pregnancyOptions}>
+        {options.map((opt) => {
+          const active = current === opt.key;
+          return (
+            <Pressable
+              key={opt.key}
+              onPress={() => select(opt.key)}
+              style={[
+                styles.pregnancyChip,
+                {
+                  backgroundColor: active ? colors.secondary : colors.surfaceVariant,
+                  borderColor: active ? colors.secondary : colors.border,
+                },
+              ]}
+            >
+              <Text
+                variant="caption"
+                style={{ color: active ? colors.onSecondary : colors.textMuted }}
+              >
+                {opt.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+      {current === 'unknown' ? (
+        <Text variant="caption" style={{ color: colors.warning }}>
+          {'⚠️ ' + t('summary.unbornWarning')}
+        </Text>
+      ) : null}
+    </View>
+  );
+}
+
 // Collect named heirs of one relation, then continue. Each added heir can
 // be edited inline or removed.
 function CollectStep({
@@ -282,14 +380,13 @@ function CollectStep({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState('');
 
+  const isWives = node.relation === 'wife';
   const items = data.heirs.filter((h) => h.relation === node.relation);
   const atMax = node.max != null && items.length >= node.max;
   const trimmed = name.trim();
   const canAdd = trimmed.length > 0 && !atMax;
   const isEditing = editingId !== null;
 
-  // Unsaved text in the add field or an open edit blocks "continue" so no
-  // entry is lost by advancing past it.
   const hasPending = trimmed.length > 0;
   const blockContinue = hasPending || isEditing;
 
@@ -347,7 +444,7 @@ function CollectStep({
 
       {items.map((h) =>
         editingId === h.id ? (
-          // --- Edit mode: replace the row with an inline editor ---------
+          // --- Edit mode ---
           <View key={h.id} style={styles.editRow}>
             <View style={styles.col}>
               <TextField
@@ -372,21 +469,24 @@ function CollectStep({
             />
           </View>
         ) : (
-          // --- Read mode: name + edit / remove --------------------------
-          <View key={h.id} style={styles.row}>
-            <Text variant="body">{h.name}</Text>
-            <View style={styles.rowActions}>
-              <Button
-                label={t('family.edit')}
-                variant="ghost"
-                onPress={() => startEdit(h)}
-              />
-              <Button
-                label={t('family.remove')}
-                variant="ghost"
-                onPress={() => removeHeir(h.id)}
-              />
+          // --- Read mode + pregnancy picker for wives ---
+          <View key={h.id}>
+            <View style={styles.row}>
+              <Text variant="body">{h.name}</Text>
+              <View style={styles.rowActions}>
+                <Button
+                  label={t('family.edit')}
+                  variant="ghost"
+                  onPress={() => startEdit(h)}
+                />
+                <Button
+                  label={t('family.remove')}
+                  variant="ghost"
+                  onPress={() => removeHeir(h.id)}
+                />
+              </View>
             </View>
+            {isWives ? <PregnancyPicker wife={h} /> : null}
           </View>
         ),
       )}
@@ -423,4 +523,22 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   rowActions: { flexDirection: 'row', gap: spacing.sm, alignItems: 'center' },
+  pregnancyBox: {
+    gap: spacing.xs,
+    paddingLeft: spacing.md,
+    paddingBottom: spacing.sm,
+    borderLeftWidth: 2,
+    borderLeftColor: '#E5E7EB',
+  },
+  pregnancyOptions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.xs,
+  },
+  pregnancyChip: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
 });

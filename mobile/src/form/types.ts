@@ -91,12 +91,17 @@ export type HeirRelation =
   | 'maternalGrandmother' // jadda li-umm: grandmother on the mother's side
   | 'paternalGrandmother' // jadda li-ab: grandmother on the father's side
   | 'grandson'
-  | 'granddaughter';
+  | 'granddaughter'
+  | 'unborn_unknown'   // حمل - جنس غير معروف
+  | 'unborn_son'       // حمل - ذكر
+  | 'unborn_daughter'; // حمل - أنثى
 
 export type Heir = {
   id: string;
   name: string;
   relation: HeirRelation;
+  isUnborn?: boolean;   // true for unborn children (حمل)
+  motherName?: string;  // name of the pregnant wife
 };
 
 export type FormData = {

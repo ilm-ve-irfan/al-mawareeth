@@ -70,7 +70,12 @@
     "afterWasiya": "After deducting debts and bequest"
   },
   "liabilities": {
-    "label": "Debts & expenses"
+    "label": "Debts & expenses",
+    "infoLabel": "About debts & expenses",
+    "infoTitle": "Rights related to the estate",
+    "infoItem1": "Rights tied to estate assets, such as zakat",
+    "infoItem2": "Funeral and burial expenses",
+    "infoItem3": "Outstanding debts owed by the deceased"
   },
   "family": {
     "title": "Family Details",
@@ -121,7 +126,13 @@
       "maternalGrandmother": "Maternal grandmother's name",
       "paternalGrandmother": "Paternal grandmother's name"
     },
-    "editingHint": "Save or cancel the edit to continue"
+    "editingHint": "Save or cancel the edit to continue",
+    "pregnancyLabel": "Is she pregnant?",
+    "pregnancyNo": "No",
+    "pregnancyUnknown": "Pregnant (gender unknown)",
+    "pregnancySon": "Pregnant with a boy",
+    "pregnancyDaughter": "Pregnant with a girl",
+    "unbornOf": "Unborn of"
   },
   "relations": {
     "husband": "Husband",
@@ -140,7 +151,10 @@
     "maternalGrandmother": "Maternal grandmother",
     "paternalGrandmother": "Paternal grandmother",
     "grandson": "Grandson",
-    "granddaughter": "Granddaughter"
+    "granddaughter": "Granddaughter",
+    "unborn_unknown": "Unborn (gender unknown)",
+    "unborn_son": "Unborn boy",
+    "unborn_daughter": "Unborn girl"
   },
   "summary": {
     "title": "Summary",
@@ -155,6 +169,7 @@
     "wasiya": "Bequest (wasiya)",
     "wasiyaCapped": "Capped at one third of the estate (max {{max}})",
     "times": "{{n}}×",
-    "listSeparator": ", "
+    "listSeparator": ", ",
+    "unbornWarning": "Notice: There is an unborn child — the share of a son will be reserved until birth, then redistributed."
   }
 }

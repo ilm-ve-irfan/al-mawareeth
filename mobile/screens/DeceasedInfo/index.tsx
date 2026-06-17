@@ -1,10 +1,12 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { ScrollView, StyleSheet, View, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import {
   Button,
   Card,
+  InfoModal,
   SegmentedControl,
   Select,
   StepIndicator,
@@ -49,6 +51,7 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
   const colors = useColors();
   const { t } = useTranslation('form');
   const { data, setDeceased, setCurrency, addAsset, setLiabilities } = useForm();
+  const [liabilitiesInfoVisible, setLiabilitiesInfoVisible] = useState(false);
 
   const genderOptions = [
     { value: 'male' as Gender, label: t('deceased.male') },
@@ -138,7 +141,30 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
           })}
         </Card>
 
-        {/* Wasiya (bequest) — sits next to the estate total it relates to */}
+        {/* Liabilities — must come before Wasiya so the 1/3 cap is
+            calculated on net estate (assets − debts), not gross assets. */}
+        <Card>
+          <View style={styles.row}>
+            <Text variant="label">{t('liabilities.label')}</Text>
+            <Pressable
+              onPress={() => setLiabilitiesInfoVisible(true)}
+              accessibilityRole="button"
+              accessibilityLabel={t('liabilities.infoLabel')}
+              hitSlop={8}
+            >
+              <Text variant="label" style={{ color: colors.secondary }}>ⓘ</Text>
+            </Pressable>
+          </View>
+          <TextField
+            label={undefined}
+            value={data.liabilities ? String(data.liabilities) : ''}
+            onChangeText={(text) => setLiabilities(toNumber(text))}
+            keyboardType="numeric"
+            placeholder="0"
+          />
+        </Card>
+
+        {/* Wasiya (bequest) — max is 1/3 of net estate after debts */}
         <Card>
           <View style={styles.row}>
             <Text variant="label">{t('deceased.hasWasiya')}</Text>
@@ -184,20 +210,20 @@ export default function DeceasedInfoScreen({ navigation }: Props) {
           ) : null}
         </Card>
 
-        {/* Liabilities -------------------------------------------------- */}
-        <Card>
-          <TextField
-            label={t('liabilities.label')}
-            value={data.liabilities ? String(data.liabilities) : ''}
-            onChangeText={(text) => setLiabilities(toNumber(text))}
-            keyboardType="numeric"
-            placeholder="0"
-          />
-        </Card>
-
         {hasIncompleteAsset ? (
           <Text variant="caption">{t('assets.incompleteHint')}</Text>
         ) : null}
+
+        <InfoModal
+          visible={liabilitiesInfoVisible}
+          onClose={() => setLiabilitiesInfoVisible(false)}
+          title={t('liabilities.infoTitle')}
+          items={[
+            t('liabilities.infoItem1'),
+            t('liabilities.infoItem2'),
+            t('liabilities.infoItem3'),
+          ]}
+        />
 
         <Button
           label={t('actions.next')}

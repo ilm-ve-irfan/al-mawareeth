@@ -125,6 +125,9 @@ export const heirTree: HeirTree = {
       max: 4,
       next: [],
     },
+    // Pregnancy (حمل) is handled inline in the wives CollectStep UI.
+    // Each wife gets a pregnancy question after her name is entered.
+    // Unborn children are added automatically as son/daughter/unborn_unknown.
     husband: {
       id: 'husband',
       kind: 'collect',
