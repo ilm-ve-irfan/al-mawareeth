@@ -301,15 +301,19 @@ export const heirTree: HeirTree = {
     // brothers". In the diagram this chain hangs at the tail of the sibling
     // branch (under full-brothers = 0), so "no full brothers" is guaranteed
     // by position; here it is a flat gate, so the condition is explicit.
-    // No full brothers, no paternal brothers, both grandmothers dead, no
-    // surviving spouse, no children. If it passes, walk the ordered chain;
-    // each "yes" stops the chain (that class takes the residue), each "no"
-    // moves to the next, more distant class. The final node lists the
-    // distant kindred (dhawu al-arham).
+    // No father, no grandfather, no full brothers, no paternal brothers, both
+    // grandmothers dead, no surviving spouse, no children. The father and the
+    // grandfather are both ʿaṣaba and block the entire remote chain, so the
+    // chain must not even be asked while either is alive. If the gate passes,
+    // walk the ordered chain; each "yes" stops the chain (that class takes the
+    // residue), each "no" moves to the next, more distant class. The final
+    // node lists the distant kindred (dhawu al-arham).
     residuaryGate: {
       id: 'residuaryGate',
       kind: 'guard',
       all: [
+        { node: 'father', is: 'no', whenMissing: 'no' },
+        { node: 'grandfather', is: 'no', whenMissing: 'no' },
         { relation: 'fullBrother', count: 'none' },
         { relation: 'paternalBrother', count: 'none' },
         { node: 'paternalGrandmother', is: 'no', whenMissing: 'no' },
