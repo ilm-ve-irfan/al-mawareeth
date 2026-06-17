@@ -287,11 +287,13 @@ function PregnancyPicker({
   const { data, addHeir, removeHeir } = useForm();
   const colors = useColors();
 
-  // Find any existing unborn heir linked to this wife.
+  // Find any existing unborn heir linked to this wife. Match on the wife's
+  // stable id (not her name) so duplicate names or a later rename can't break
+  // or orphan the link.
   const unborn = data.heirs.find(
     (h) =>
       h.isUnborn &&
-      h.motherName === wife.name &&
+      h.motherId === wife.id &&
       ['son', 'daughter', 'unborn_unknown'].includes(h.relation),
   );
 
@@ -311,12 +313,9 @@ function PregnancyPicker({
     const relation: HeirRelation =
       next === 'son' ? 'son' : next === 'daughter' ? 'daughter' : 'unborn_unknown';
 
-    const name =
-      next === 'unknown'
-        ? `${t('family.unbornOf')} ${wife.name}`
-        : `${t('family.unbornOf')} ${wife.name}`;
+    const name = `${t('family.unbornOf')} ${wife.name}`;
 
-    addHeir({ relation, name, isUnborn: true, motherName: wife.name });
+    addHeir({ relation, name, isUnborn: true, motherId: wife.id });
   };
 
   const options: { key: PregnancyState; label: string }[] = [
